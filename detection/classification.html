@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>江门气象监测系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">在线检测</h1>
+		</header>
+		<div class="mui-content">
+			<button type="button" class="mui-btn mui-btn-primary mui-btn-block">接地装置</button>
+			<button type="button" class="mui-btn mui-btn-primary mui-btn-block">引下线</button>
+			<button type="button" class="mui-btn mui-btn-block">防侧击装置</button>
+			<button type="button" class="mui-btn mui-btn-danger mui-btn-block">接闪器</button>
+		    <button type="button" class="mui-btn mui-btn-danger mui-btn-block">等电位连接</button>
+			<button type="button" class="mui-btn mui-btn-danger mui-btn-block">电涌保护器</button>
+		</div>
+	</body>
+</html>
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+	mui.plusReady(function(){
+		//获取传值
+		var self = plus.webview.currentWebview();
+		//全局变量mobile
+		pj_id = self.pj_id;//工程id
+		mobile = self.mobile;//手机号码
+		my_name = self.my_name;//用户姓名
+        gcmc = self.gcmc; //工程名称
+        constr = self.constr; //施工单位
+        supvision = self.supvision; //监理单位
+        detect = self.detect; //检测单位
+        timestamp = self.timestamp;//工程时间戳
+		gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
+		my_name = decodeURI(decodeURI(my_name)); //获取用户名
+		
+		mui(".mui-content").on("tap","button",function(){
+			jclx = this.innerHTML;//点击的检测项目
+			mui.openWindow({
+				id: "detection_online",
+				url: "detection_online.html",
+				extras:{
+					gcmc:gcmc,
+					mobile:mobile,
+					my_name:my_name,
+					timestamp:timestamp,
+					constr:constr,
+					supvision:supvision,
+					detect:detect,
+					pj_id:pj_id,
+					jclx:jclx
+				},
+				show: {
+					aniShow:"pop-in"
+				},
+				waiting: {
+					autoShow: false
+				}
+			});
+		});
+	});
+</script>

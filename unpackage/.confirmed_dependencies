@@ -1,0 +1,63 @@
+{
+	"login.html": {
+		"refer": [
+			"reg.html",
+			"index.html"
+		]
+	},
+	"index.html": {
+		"resources": [
+			"my.html"
+		],
+		"refer": [
+			"my.html",
+			"info.html",
+			"team.html"
+		]
+	},
+	"my.html": {
+		"refer": [
+			"my_plus/my_project_list.html",
+			"my_plus/my_setting.html"
+		]
+	},
+	"my_plus/my_project_list.html": {
+		"refer": [
+			"my_plus/my_project.html"
+		]
+	},
+	"my_plus/my_project.html": {
+		"refer": [
+			"my_plus/my_project_list.html",
+			"detection/detection_online.html",
+			"detection/classification.html"
+		]
+	},
+	"detection/detection_online.html": {
+		"refer": [
+			"detection/material_add.html",
+			"detection/detection_samDet.html",
+			"detection/online_deliver.html"
+		]
+	},
+	"detection/classification.html": {
+		"refer": [
+			"detection/detection_online.html"
+		]
+	},
+	"detection/material_add.html": {
+		"refer": [
+			"detection/camera_image.html"
+		]
+	},
+	"detection/detection_samDet.html": {
+		"refer": [
+			"detection/detection_online.html"
+		]
+	},
+	"detection/online_deliver.html": {
+		"refer": [
+			"detection/camera_image.html"
+		]
+	}
+}

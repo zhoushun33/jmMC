@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门气象监测系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">见证基本信息</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>见证日期:</label>
+		            <input id="jzrq" type="text" class="mui-input-clear" placeholder="请输入收样日期" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>监理单位:</label>
+		            <input id="jldw" type="text" class="mui-input-clear" placeholder="请输入见证单位">
+		        </div>
+		         <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>	
+			
+			<!-------------------------------------------处理图片------------------------------------------>
+		    <form id="img_content" class="my_none" >
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">见证人照片</span>
+		        	<br/>
+		        	<div><img id="newUpload3" src="../image/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>见证照片说明:</label>
+			            <input id="receivedText" type="text" class="mui-input-clear" placeholder="请输入见证照片说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_syzp" class="dlist" style="text-align:left;">
+						<li id="empty_syzp" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_syzp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('syzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="syzp" type="button" class="mui-btn mui-btn-primary" onclick="upload2(this.id,'clean_syzp');">附件上传</button>
+		        </div>
+		    </form>
+		    <!-------------------------------------------处理图片------------------------------------------>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script src="../js/upload_sy.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+	      		var self = plus.webview.currentWebview();
+	      		ulId = self.ulId; 
+	      		my_name = self.my_name;
+	      		constr = self.constr;
+	      		supvision = self.supvision;
+	      		detect = self.detect;
+                my_name = decodeURI(decodeURI(my_name));
+				var doc=document;
+				var save=doc.getElementById("save");
+				var sjc = doc.getElementById("sjc");
+				var operation_unit = doc.getElementById("operation_unit");
+				jzr.value = my_name;  //见证人默认为账号姓名
+				jldw.value = supvision;
+				
+				//异步获取在线检测时间戳
+				mui.ajax(url+'detection/material_detail.php',{
+					data:{
+						ulid:ulId				
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+//						alert(data);
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							sjc.value=data[i].时间戳;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						return callback('ajax错误'+type+errorThrown);
+					}
+					
+				});	
+				
+				//日期监听
+				jzrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    jzrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				
+			
+				//保存
+				save.addEventListener('tap',function(){
+					var myform=document.getElementById('myform');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
+				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('detection_online');
+				target.reload(true);
+				mui.back();
+			}	
+			
+		</script>
+	</body>
+
+</html>

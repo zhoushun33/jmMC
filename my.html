@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门气象监测系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <ul class="mui-table-view mui-table-view-chevron my_list">
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right" open-type="common" id="my_pj" >
+						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<div class="mui-media-body">
+							我的工程
+							<p id='www' class='mui-ellipsis'>正在加载...</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" >
+					<a id="task" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<div class="mui-media-body">
+							在线检测
+							<p class='mui-ellipsis'>正在加载...</p>
+						</div>
+					</a>
+				</li>
+		    	<li class="mui-table-view-cell mui-media" >
+					<a id="count" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<div class="mui-media-body">
+							统计分析
+							<p class='mui-ellipsis'>汇总统计实测实量数据</p>
+						</div>
+					</a>
+				</li>
+			</ul>	
+		</div>
+		<div class="mui-content">
+		    <ul class="mui-table-view mui-table-view-chevron my_list">
+				<li class="mui-table-view-cell mui-media">
+					<a class='mui-navigate-right' href="my_plus/my_setting.html">
+						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<div class="mui-media-body">
+							更多设置
+							<p class='mui-ellipsis'>个人信息，系统设置等</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/service.js" ></script>
+		<script src="js/my_js_nextpage.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				//全局变量mobile
+				mobile = self.mobile;
+				my_name = self.my_name;
+				uid = self.uid;
+				unitName = self.unitName;
+				unit_d = self.unit;
+				unit = encodeURI(encodeURI(unit_d));
+				my_name = encodeURI(encodeURI(my_name));
+				var my_pj = document.getElementById("my_pj");
+				var task = document.getElementById("task");
+				var p = document.getElementsByTagName("p");
+				my_pj.href = "my_plus/my_project_list.html?uid="+uid+" ";
+				
+				//获取我的工程数目
+				mui.ajax(url+'index.php',{
+					data:{
+						uid:uid
+					},
+					type:"post",
+					dataType:"json",
+					timeout:10000,
+					success:function(data){
+//						alert(data)
+						if(data.status=="success"){
+							p[0].firstChild.nodeValue = data.pj_num + '个项目';
+						}
+					},
+					error:function(xhr,type,errThrown){
+						alert("ajax错误 :"+type+'----'+errThrown);
+					}
+				});
+				mui.ajax(url+'my_task/task_list.php',{
+					data:{
+						flag:'获取工程时间戳',
+						uid:uid
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length = data.length;
+						for(var i=0;i<length;i++){
+							var pj_timestamp = data[i].时间戳;
+							taskList1(pj_timestamp);//在线检测
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				//在线检测
+				function taskList1(pj_timestamp){
+					mui.ajax(url+'my_task/task_list.php',{
+						data:{
+							flag:"在线检测",
+							pj_timestamp:pj_timestamp,
+							unit:unit_d,
+							unitName:unitName
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							var length = data.length;
+							if(length){
+								var task = document.getElementById("task");
+								var span = document.createElement("span");
+								span.innerHTML = "待处理";
+								span.className='mui-badge mui-badge-danger';
+								task.appendChild(span);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
+			});
+			
+		</script>
+	</body>
+
+</html>

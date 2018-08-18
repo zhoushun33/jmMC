@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			.mui-input-group label {
+				width: 22%;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
+					<label>确认</label>
+					<input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="请确认密码">
+				</div>
+				<div class="mui-input-row">
+					<label>邮箱</label>
+					<input id='email' type="email" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+				</div>
+				<div class="mui-input-row">
+					<label>手机</label>
+					<input id='mobile' type="number" class="mui-input-clear mui-input" placeholder="请输入手机号">
+				</div>
+				<div class="mui-input-row">
+					<label>姓名</label>
+					<input id='my_name' type="text"  class="mui-input-clear mui-input" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>单位</label>
+					<select id="units">
+						<option></option>
+						<option>施工单位</option>
+						<option>监理单位</option>
+						<option>检测单位</option>
+						<option>监督机构</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label style="font-size: 16px;">单位名称</label>
+					<input id='unitName' type="text" class="mui-input-clear mui-input" placeholder="请输入单位名称">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+			</div>
+			<!--<div class="mui-content-padded">
+				<p>注册真实可用，注册成功后的用户可用于登录，但是示例程序并未和服务端交互，用户相关数据仅存储于本地。</p>
+			</div>-->
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/service.js"></script>
+		<!--<script src="js/app.js"></script>-->
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+//					var settings = app.getSettings();
+					var regButton = doc.getElementById('reg');
+					var accountBox = doc.getElementById('account');
+					var passwordBox = doc.getElementById('password');
+					var mobile = doc.getElementById("mobile");
+					var passwordConfirmBox = doc.getElementById('password_confirm');
+					var emailBox = doc.getElementById('email');
+					var my_name = doc.getElementById("my_name");
+					var units = doc.getElementById("units");
+					var unitName = doc.getElementById("unitName");
+					//获取cid(每台设备指定一个)
+					var cid = plus.push.getClientInfo().clientid;
+					regButton.addEventListener('tap', function(event) {
+						var regInfo = {
+							account: accountBox.value,
+							password: passwordBox.value,
+							email: emailBox.value,
+							mobile:mobile.value,
+							my_name:my_name.value,
+							units:units.value,
+							unitName:unitName.value,
+							cid:cid
+						};
+						var str = accountBox.value.trim();
+						var passwordConfirm = passwordConfirmBox.value;
+						//账号名为中文或为空
+						if(!str.length){
+							alert("账号为空");
+				        	return;
+				        //判断账号是否包含中文
+						}else if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){
+				            alert("对不起，您输入的字符串类型格式不正确(不可中文)!");//请将“字符串类型”要换成你要验证的那个属性名称！    
+				            return;
+					    //密码为空或密码输入不一致
+						}else if(!regInfo.password.length||!passwordConfirm.length){
+							alert("密码为空");
+				        	return;
+				        //判断密码输入是否一致
+						}else if(passwordConfirm != regInfo.password){
+							alert('密码两次输入不一致');
+							return;
+						//判断手机号	
+						}else if(regInfo.mobile.length!=11){
+							alert('手机号有误');
+							return;
+						//判断姓名是否输入	
+						}else if(!regInfo.my_name.length){
+							alert('请输入姓名');
+							return;
+						//单位未选择
+						}else if(!regInfo.units.length){
+							alert('请选择单位');
+							return;
+						//单位名称为空
+						}else if(!regInfo.unitName.length){
+							alert('请输入单位名称');
+							return;
+						}
+						
+						//注册账号异步
+						$.ajax(url+'reg.php',{
+							data:{
+								account:regInfo.account,
+								password:regInfo.password,
+								email:regInfo.email,
+								mobile:regInfo.mobile,
+								my_name:regInfo.my_name,
+								units:regInfo.units,
+								unitName:regInfo.unitName,
+								cid:cid
+							},
+							dataType:'json',
+							type:'POST', 
+							timeout:10000,
+							success:function(data){
+								if(data.result=='success'){
+									plus.nativeUI.toast('恭喜注册成功!');
+									mui.back();
+								}else if(data.result!='success'){
+									alert(data.result);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								alert('ajax错误'+type+'---'+errorThrown);
+							}
+						});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

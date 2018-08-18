@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门气象监测系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<style type="text/css">
+			.my_table {
+				float: left;
+				text-align: center;
+			}
+			.my_th_weight {
+				font-weight: bolder;
+			}
+			.my_td_width85 {
+				width: 85%;
+			}
+			.my_td_width30 {
+				width: 40%;
+			}
+			.inp {
+				width: 20%; 
+				height: 20px;
+				border: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">新增检测</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group" >
+		        <div class="mui-input-row">
+		            <label>工程类型：</label>
+						<select id="gclx" onchange="" style="font-size: 15px;">
+							<option disabled="disabled" selected="selected">请选择工程类型</option>
+							<option value="市政工程">市政工程</option>
+							<option value="房建工程">房建工程</option>
+							
+						</select>
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测类型:</label>
+		            <input id="jclx" type="text" class="mui-input-clear" placeholder="请选择检测类型">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测项目:</label>
+		            <select id="jcxm" multiple="multiple" onchange="" style="padding-left:0px;font-size: 15px;">
+						<!--动态创建-->
+					</select>
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测人:</label>
+		            <input id="jcr" type="text" class="mui-input-clear" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测日期:</label>
+		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>合格证编号:</label>
+		            <input id="qualifiedNum" type="text" class="mui-input-clear" placeholder="请输入合格证编号"  >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>备注:</label>
+		            <input id="remark" type="text" class="mui-input-clear" placeholder="请输入备注信息" \ >
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>	
+		    </form>
+		    <br/>
+		    <form  id="myform2" class="mui-input-group" >
+		        <div  class="mui-input-row">
+		            <label>检测单位:</label>
+		            <select id="jcdw" style="font-size: 14px;" ></select>
+		        </div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>	
+			
+			<!--填写检测数据-->
+			<form id="data_make" class="my_none">
+				<div class="mui-control-content mui-active">
+					<!--<ul class="mui-table-view">
+						<li class="mui-table-view-cell my_th_weight mui-disabled">
+							<div class="my_table my_td_width70">检测项目</div>
+							<div class="my_table my_td_width30">检测值</div>
+						</li>
+					</ul></br></br></br>-->
+					<ul id="make" class="mui-table-view">
+						
+					</ul>
+					<div id="formbtn" class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="save_data" type="button" class="mui-btn mui-btn-primary">保存</button>
+					</div>	
+				</div>
+			</form>
+			
+			<!--处理图片-->
+		    <form id="img_content" class="my_none" >
+	        	<!--委托人照片-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">检测人照片</span>
+		        	<br/>
+		        	<div><img id="newUpload1" src="../image/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测人照片说明:</label>
+			            <input id="sceneText" type="text" class="mui-input-clear" placeholder="请输入场景图片说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_cj" class="dlist" style="text-align:left;">
+						<li id="empty_cj" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean1" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
+		        </div>
+		        <!--检测设备照片-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">检测设备照片</span>
+		        	<br/>
+		        	<div><img id="newUpload2" src="../image/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测设备照片说明:</label>
+			            <input id="sampleText" type="text" class="mui-input-clear" placeholder="请输入样品说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_yp" class="dlist" style="text-align:left;">
+						<li id="empty_yp" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean2" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
+		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
+		        	<button id="sdata" type="button" disabled="disabled" class="mui-btn mui-btn-primary" onclick="datamake()">检测数据</button>
+		        </div>
+		    </form>
+		    <!--处理图片-->
+	    	
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/service.js"></script>
+		<script src="../js/upload_qy.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取工程名称
+				var self = plus.webview.currentWebview();
+                gcmc_c = self.gcmc_c;
+                my_name = self.my_name;
+                timestamp = self.timestamp;
+                detect = self.detect;
+                supvision = self.supvision; 
+                jcdl = self.jclx;
+                my_name = decodeURI(decodeURI(my_name));
+                gcmc = decodeURI(decodeURI(gcmc_c));
+				detect = decodeURI(decodeURI(detect));
+				supvision = decodeURI(decodeURI(supvision));
+				var doc = document;
+				var jclx = doc.getElementById("jclx");
+				var save = doc.getElementById("save");
+				var sjc=doc.getElementById('sjc');
+				var jcr = doc.getElementById("jcr");
+				var qualifiedNum = doc.getElementById("qualifiedNum");
+				var jcrq = doc.getElementById("jcrq");
+				var remark = doc.getElementById("remark");
+				var jcdw = doc.getElementById('jcdw');
+				var save_data = doc.getElementById("save_data");
+				jcr.value = my_name; //取样人默认为账号姓名
+				jclx.value = jcdl;//写入检测类型
+				//自动添加当前时间戳,附件上传时会用到
+				var myDate=new Date();
+				var mytime=myDate.getTime();
+				sjc.value=mytime;
+//				获取检测项目
+				mui.ajax(url+'detection/material_obtain.php',{
+					data:{
+						flag:"获取检测项目",
+						jcdl:jcdl
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data)
+						var lenght = data.length;
+						for(var i=0;i<lenght;i++){
+							var id = data[i].id;
+							var jclx = data[i].检测类型;
+							var jcxm = data[i].检测项目;
+							addProject(jcxm,id);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				//动态创建检测项目
+				var sel = document.getElementById("jcxm");
+				var addProject = function(jcxm,xmid){
+					var option = document.createElement("option");
+					option.value = xmid;
+					option.innerHTML = jcxm;
+					sel.appendChild(option);
+				}
+				
+				//根据检测项目创建填写数据页面
+				sel.addEventListener('change',function(){
+					//获取选择的检测项目
+					var sele = sel.getElementsByTagName("option");
+					var choose = "";
+					var chooseid = "";
+					for(var i=0;i<sele.length;i++){
+						if(sele[i].selected){
+							chooseid+=sele[i].value+",";
+							choose+=sele[i].innerHTML+",";
+						}
+					}
+					makeProject(choose,chooseid);
+				});
+				
+				//动态添加检测单位
+				var detection_unit = detect.split(",");
+				for(var i=0;i<detection_unit.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = detection_unit[i];
+					jcdw.appendChild(option);
+				}
+				
+				//动态生成填写页面
+				var makeProject = function(choose,chooseid){
+					var make = document.getElementById("make");
+					make.innerHTML = '<p>检测数据：</p>';
+					var str = new Array();
+					str = choose.split(",");
+					str1 = chooseid.split(",");
+					for(var j=0;j<str.length-1;j++){
+						var li = document.createElement("li");
+						var div1 = document.createElement("div");
+						var input = document.createElement("input");
+						li.className = "mui-table-view-cell my_th_weight mui-disabled";
+						div1.classList = "my_table my_td_width85";
+						input.className = "inp";
+						input.type = "text";
+						input.id = str1[j];
+						div1.innerHTML = str[j];
+						li.appendChild(div1);
+						li.appendChild(input);
+						make.appendChild(li);
+					}
+				}
+				
+				//检测日期
+				jcrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    jcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				
+				save.addEventListener('tap',function(){
+					//信息保存
+					var gclx = document.getElementById("gclx").value;
+					var jclx = document.getElementById("jclx").value;
+					var jcr = document.getElementById("jcr").value;
+					var jcrq = document.getElementById("jcrq").value;
+					var qualifiedNum = document.getElementById("qualifiedNum").value;
+					var remark = document.getElementById("remark").value;
+					var jcdw = document.getElementById("jcdw").value;
+					mui.ajax(url+'my_plus/my_material_upload.php',{
+						data:{
+							lx:'insert',
+							mchen:sjc.value,
+							gclx:gclx,
+							jclx:jclx,
+							jcr:jcr,
+							jcrq:jcrq,
+							qualifiedNum:qualifiedNum,
+							remark:remark,
+							jcdw:jcdw,
+							timestamp:timestamp,
+							gcmc:gcmc
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+//							alert(data)
+						},
+						error:function(xhr,type,errThrown){
+//							alert('ajax错误 ');
+						}
+					});
+					var myform=document.getElementById('myform');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
+					setTimeout( function(){
+						plus.nativeUI.closeWaiting();
+					}, 500 );
+				});
+			});
+			
+			//填写数据页面
+			var datamake = function(){
+				var img_content = document.getElementById("img_content");
+				var myform2 = document.getElementById("myform2");
+				var data_make = document.getElementById("data_make");
+				img_content.classList.add('my_none');
+				myform2.classList.add('my_none');
+				data_make.classList.remove('my_none');
+			}
+			
+			//保存检测数据
+			save_data.addEventListener("tap",function(){
+				save_data.disabled=true;
+				var make_li = document.getElementById("make").getElementsByTagName("input");
+				var data_id = "";
+				var data_in = "";
+				for(var i=0;i<make_li.length;i++){
+					data_id += make_li[i].id+",";
+					data_in += make_li[i].value+",";
+				}
+				mui.ajax(url+'my_plus/my_material_upload.php',{
+						data:{
+							lx:'insert_data',
+							mchen:sjc.value,
+							jclx:jcdl,
+							data_id:data_id,
+							data_in:data_in,
+							timestamp:timestamp,//工程时间戳
+							gcmc:gcmc
+						},
+						type:'post',
+//						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							
+							alert("保存成功");
+							var target=plus.webview.getWebviewById('detection_online');
+							target.reload(true);
+							mui.back();
+						},
+						error:function(xhr,type,errThrown){
+//							alert('ajax错误 ');
+						}
+					});
+			});
+			
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('detection_online');
+				target.reload(true);
+				mui.back();
+			}
+		</script>
+	</body>
+
+</html>
