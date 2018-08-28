@@ -16,12 +16,12 @@
 				margin-top: 20px;
 			}
 			.mui-input-group label {
-				width: 22%;
+				width: 30%;
 			}
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: 70%;
 			}
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
@@ -69,7 +69,7 @@
 					<input id='my_name' type="text"  class="mui-input-clear mui-input" placeholder="请输入姓名">
 				</div>
 				<div class="mui-input-row">
-					<label>单位</label>
+					<label>单位类型</label>
 					<select id="units">
 						<option></option>
 						<option>施工单位</option>
@@ -79,9 +79,11 @@
 					</select>
 				</div>
 				<div class="mui-input-row">
-					<label style="font-size: 16px;">单位名称</label>
-					<input id='unitName' type="text" class="mui-input-clear mui-input" placeholder="请输入单位名称">
-				</div>
+		            <label>单位名称:</label>
+		            <select id="unitName">
+						<option></option>
+					</select>
+		        </div>
 			</form>
 			<div class="mui-content-padded">
 				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
@@ -109,7 +111,39 @@
 					var unitName = doc.getElementById("unitName");
 					//获取cid(每台设备指定一个)
 					var cid = plus.push.getClientInfo().clientid;
+					
+					//异步获取单位
+						mui.ajax(url+'unit.php',{
+							data:{
+								flag:"获取单位"
+							},
+							type:"post",
+							dataType:"json",
+							timeout:10000,
+							success:function(data){
+//								alert(data)
+								if(data.length>0){
+									for(var i=0;i<data.length;i++){
+										var option = document.createElement("option");
+										option.id = data[i].id;
+										option.innerHTML = data[i].检测单位名称;
+										unitName.appendChild(option);
+									}
+								}
+								
+							},
+							error:function(xhr,type,errThrown){
+								alert("ajax错误 :"+type+'----'+errThrown);
+							}
+						});
+						
 					regButton.addEventListener('tap', function(event) {
+						var unitsel = unitName.getElementsByTagName("option");
+						for(var i=0;i<unitsel.length;i++){
+							if(unitsel[i].selected=true){
+								var unitid = unitsel[i].id;
+							}
+						}
 						var regInfo = {
 							account: accountBox.value,
 							password: passwordBox.value,
@@ -118,10 +152,12 @@
 							my_name:my_name.value,
 							units:units.value,
 							unitName:unitName.value,
+							unitid:unitid,
 							cid:cid
 						};
 						var str = accountBox.value.trim();
 						var passwordConfirm = passwordConfirmBox.value;
+						
 						//账号名为中文或为空
 						if(!str.length){
 							alert("账号为空");
@@ -165,6 +201,7 @@
 								mobile:regInfo.mobile,
 								my_name:regInfo.my_name,
 								units:regInfo.units,
+								unitid:regInfo.unitid,
 								unitName:regInfo.unitName,
 								cid:cid
 							},

@@ -33,6 +33,7 @@
 					document.getElementById("my_name").value=data.my_name;
 					document.getElementById("uid").value=data.uid;
 					document.getElementById("unit").value=data.unitid;
+					document.getElementById("unitType").value=data.unitType;
 					document.getElementById("unitName").value=data.unitName;
 					return callback();
 				} else{					

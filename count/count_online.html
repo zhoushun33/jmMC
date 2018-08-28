@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>江门气象局监测系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">		
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+	</head>
+		<style type="text/css">
+		.margintop10px{
+			margin-top: 10px;
+		}
+		.paddingleft34px{
+			padding-left: 34px;
+		}
+		.mui-popover {
+			height: 260px;
+		}
+		
+		#cdbzPopover{
+			min-width: 282px;				
+			top:15% !important;
+			margin-top: 0px;
+			left: 50% !important;
+			margin-left: -141px;
+			position: fixed;
+		}
+		.mui-popover .mui-popover-arrow{
+			display: none !important;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">统计分析</h1>
+		</header>
+		<div class="mui-content">
+	        <ul class="mui-table-view mui-grid-view mui-grid-9">
+	            <li id="xczg" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <span class="mui-icon mui-icon-home"></span>
+                    <div class="mui-media-body">在线检测</div></li>
+	        </ul>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js" ></script>
+		<script type="text/javascript">		
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var mobile = self.mobile;
+				var unit = self.unit;//单位id
+				var uid = self.uid;//用户id
+//				alert(mobile+" "+unit+" "+uid);
+				//在线检测按钮监听
+//				var xczg = document.getElementById("xczg");
+//				xczg.addEventListener('tap',function() {
+//					mui.openWindow({
+//						url: 'online_data.html', 
+//						id: 'online_data',
+//						styles: { 
+//							hardwareAccelerated:false
+//						}, 
+//						extras:{
+//							mobile:mobile
+//						}, 
+//						show:{ 
+//							autoShow:true,//页面loaded事件发生后自动显示
+//							aniShow:'slide-in-right',//页面显示动画
+//							duration:'100'//页面动画持续时间
+//						},
+//						waiting:{
+//							autoShow:false,//自动显示等待框
+//						},
+//					})
+//				});
+				
+			});		
+		</script>
+	</body>
+</html>

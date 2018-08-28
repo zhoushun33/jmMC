@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>江门气象监测系统</title>
+		<title>江门市气象局在线监测系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/my_css.css">
 		<link rel="stylesheet" href="../css/mui.min.css">
@@ -13,18 +13,31 @@
 		    <h1 class="mui-title">在线检测</h1>
 		</header>
 		<div class="mui-content">
-			<button type="button" class="mui-btn mui-btn-primary mui-btn-block">接地装置</button>
-			<button type="button" class="mui-btn mui-btn-primary mui-btn-block">引下线</button>
-			<button type="button" class="mui-btn mui-btn-block">防侧击装置</button>
-			<button type="button" class="mui-btn mui-btn-danger mui-btn-block">接闪器</button>
-		    <button type="button" class="mui-btn mui-btn-danger mui-btn-block">等电位连接</button>
-			<button type="button" class="mui-btn mui-btn-danger mui-btn-block">电涌保护器</button>
+			<button type="button" class="mui-btn mui-btn-block" disabled="disabled">接地装置</button>
+			<button type="button" class="mui-btn mui-btn-block" disabled="disabled">引下线</button>
+			<button type="button" class="mui-btn mui-btn-block" disabled="disabled">防侧击装置</button>
+			<button type="button" class="mui-btn mui-btn-block" disabled="disabled">接闪器</button>
+		    <button type="button" class="mui-btn mui-btn-block" disabled="disabled">等电位连接</button>
+			<button type="button" class="mui-btn mui-btn-block" disabled="disabled">电涌保护器</button>
 		</div>
 	</body>
 </html>
 <script src="../js/mui.min.js"></script>
+<script src="../js/service.js"></script>
 <script type="text/javascript">
+//	var div = document.getElementsByClassName("mui-content")[0].getElementsByTagName("button")[0];
+//	div.classList.remove("mui-btn-primary");
+//	div.classList.add("mui-btn-primary"); mui-btn-danger
 	mui.plusReady(function(){
+		mui.init({
+			gestureConfig:{					
+				longtap: true, //长按默认为false
+				doubletap: true
+			},
+			pullRefresh : {
+				container : '#refreshContainer', //一个功能的一部分
+			}
+		});
 		//获取传值
 		var self = plus.webview.currentWebview();
 		//全局变量mobile
@@ -39,21 +52,51 @@
 		gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
 		my_name = decodeURI(decodeURI(my_name)); //获取用户名
 		
+		//根据‘我的工程’表的工程状态获取可操作按钮
+		mui.ajax(url+'detection/classification.php',{
+			data:{
+				gcsjc:timestamp,//工程时间戳
+				flag:"获取工程状态"
+			},
+			dataType:'json',
+			type:'post',
+			timeout:10000,
+			success:function(data){
+				var zt = data["工程状态"];
+				var but = document.getElementsByClassName("mui-content")[0].getElementsByTagName("button");
+				for(var i=0;i<6;i++){
+					if(i<zt){
+						but[i].classList.add("mui-btn-primary");
+						but[i].disabled = true;
+					}else if(i>zt){
+						but[i].classList.add("mui-btn-danger");
+						but[i].disabled = true;
+					}else{
+						but[i].disabled = false;
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				alert('ajax错误'+type+'---'+errorThrown+"失败！");
+			}
+		});
+		
+		//打开页面
 		mui(".mui-content").on("tap","button",function(){
 			jclx = this.innerHTML;//点击的检测项目
 			mui.openWindow({
 				id: "detection_online",
 				url: "detection_online.html",
 				extras:{
-					gcmc:gcmc,
-					mobile:mobile,
-					my_name:my_name,
-					timestamp:timestamp,
-					constr:constr,
-					supvision:supvision,
-					detect:detect,
-					pj_id:pj_id,
-					jclx:jclx
+					gcmc:gcmc,//工程名称
+					mobile:mobile,//电话
+					my_name:my_name,//姓名
+					timestamp:timestamp,//工程时间戳
+					constr:constr,//施工单位
+					supvision:supvision,//监理单位
+					detect:detect,//检测单位
+					pj_id:pj_id,//工程id
+					jclx:jclx//检测类型
 				},
 				show: {
 					aniShow:"pop-in"
@@ -61,6 +104,33 @@
 				waiting: {
 					autoShow: false
 				}
+			});
+		});
+		//长按闭合该检测
+		mui(".mui-content").on("longtap","button",function(){
+			jclx = this.innerHTML;//点击的检测项目
+			var btnArray = ['是', '否'];
+			mui.confirm('确定将该检测项闭合？', '江门市气象局在线监测系统', btnArray, function(e) {
+				if (e.index == 0) {
+					mui.ajax(url+'detection/online_list.php',{
+						data:{
+							flag:"进入下一个检测",
+							gcmc:gcmc,
+							timestamp:timestamp
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							mui.toast('已开启下一个检测项',{ duration:'long', type:'div' })
+							window.location.reload();
+						},
+						error:function(xhr,type,errorThrown){
+//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+					
+				}	
 			});
 		});
 	});

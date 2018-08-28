@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>江门市气象局在线监测系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <!--<a id="xiugai" class="mui-btn mui-btn-link mui-pull-right mui-btn-#007aff ">修改</a>-->
+		    <h1 class="mui-title">在线检测详情</h1>
+		</header>
+		<div class="mui-content">
+			<form id="myform" class="mui-input-group">
+		    	<div class="mui-input-row">
+		            <label>工程类型:</label>
+		            <input id="gclx" type="text" class="mui-input-clear" readonly="readonly">
+		            <select id="gclx_sel" onchange="" class="my_none" style="font-size: 15px;">
+							<option disabled="disabled" selected="selected">请选择工程类型</option>
+							<option value="市政工程">市政工程</option>
+							<option value="房建工程">房建工程</option>
+							
+					</select>
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测类型:</label>
+		            <input id="jclx" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测项目:</label>
+		            <input id="jcxm" type="text" class="mui-input-clear"  readonly="readonly" >
+		            <select id="jcxm_sel" multiple="multiple" class="my_none" onchange="" style="padding-left:0px;font-size: 15px;">
+						<!--动态创建-->
+					</select>
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测人:</label>
+		            <input id="jcr" type="text" class="mui-input-clear"   readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测日期:</label>
+		            <input id="jcrq" type="text" class="mui-input-clear" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测单位:</label>
+		            <input id="jcdw" type="text" class="mui-input-clear" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>备注:</label>
+		            <input id="remark" type="text" class="mui-input-clear"  readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>	
+				<div class="mui-input-row my_none">
+					<label> 工程名称：</label>
+					<input  id='gcmc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>	
+		    </form>
+		    <!--检测数据、修改-->
+			<form id="data_make" class="my_none">
+				<div class="mui-control-content mui-active">
+					<ul id="make" class="mui-table-view">
+						
+					</ul>
+					<div id="formbtn_up" class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="up_data" type="button" class="mui-btn mui-btn-primary">保存</button>
+					</div>	
+				</div>
+			</form>
+			<!--检测数据、保存-->
+			<form id="data_insert" class="my_none">
+				<div class="mui-control-content mui-active">
+					<ul id="make_ins" class="mui-table-view">
+						
+					</ul>
+					<div id="formbtn_insert" class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="insert_data" type="button" class="mui-btn mui-btn-primary">保存</button>
+					</div>	
+				</div>
+			</form>
+		    <div id="formbtn" class="mui-button-row">
+		    	<button type="button" class="mui-btn mui-btn-primary" id="xg">修改</button>
+		    	<button type="button" class="mui-btn mui-btn-primary my_none" id="saveInfo">保存信息修改</button>
+		    	<button type="button" class="mui-btn mui-btn-primary" id="EditImage">附件查看/修改</button>
+		    	<button type="button" class="mui-btn mui-btn-primary" id="data_see">数据查看/修改</button>
+			</div>	
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<!--<script src="../js/native.js"></script>-->
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取URL上的时间戳
+				var sjc_send = geturl("sjc");//检测信息时间戳
+				var ulid = geturl("ulid");
+				var type = geturl("type");//卡项状态
+				//获取项目信息
+				var selectjcxm=[];
+				var jclxx;
+				mui.ajax(url+'detection/samDet1.php',{
+					data:{
+						ulid:ulid,
+						sjc:sjc_send,
+						flag:"samdet"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+//						alert(data)
+						gclx.value = data[0].工程类型;
+						jclx.value = data[0].检测类型;
+						jclxx = data[0].检测类型;
+						jcxm.value = "已选择"+data[0].count+"项检测项目";
+						jcr.value = data[0].检测人;
+						jcrq.value = data[0].检测时间;
+						remark.value = data[0].备注;
+						jcdw.value = data[0].检测单位;
+						for(var i=1;i<data.length;i++){
+							selectjcxm[i]=data[i].检测项目id;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				//填写检测数据页面
+				mui.ajax(url+'detection/samDet1.php',{
+					data:{
+						xmsjc:sjc_send,
+						flag:"jcsj"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						if(data.length>0){
+							make.innerHTML = "检测数据:";
+						}
+						for(var i=0;i<data.length;i++){
+							var li = document.createElement("li");
+							var div = document.createElement("div");
+							var input = document.createElement("input");
+							li.className = "mui-table-view-cell my_th_weight mui-disabled";
+							div.classList = "my_table my_td_width85";
+							input.className = "inp";
+							input.type = "text";
+							input.id = data[i].id;
+							input.value = data[i].检测值
+							div.innerHTML = data[i].检测项目;
+							li.appendChild(div);
+							li.appendChild(input);
+							make.appendChild(li);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				//根据检测项目创建填写数据页面
+				var change = 0;//用于判断是否有检测项目改变
+				jcxm_sel.addEventListener('change',function(){
+					change=1;
+					//获取选择的检测项目
+					var sele = jcxm_sel.getElementsByTagName("option");
+					var choose = "";
+					var chooseid = "";
+					for(var i=0;i<sele.length;i++){
+						if(sele[i].selected){
+							chooseid+=sele[i].value+",";
+							choose+=sele[i].innerHTML+",";
+						}
+					}
+					makeProject(choose,chooseid);
+				});
+				//动态生成填写页面
+				var makeProject = function(choose,chooseid){
+					var make_ins = document.getElementById("make_ins");
+					make_ins.innerHTML = '<p>检测数据：</p>';
+					var str = new Array();
+					str = choose.split(",");
+					str1 = chooseid.split(",");
+					for(var j=0;j<str.length-1;j++){
+						var li = document.createElement("li");
+						var div1 = document.createElement("div");
+						var input = document.createElement("input");
+						li.className = "mui-table-view-cell my_th_weight mui-disabled";
+						div1.classList = "my_table my_td_width85";
+						input.className = "inp";
+						input.type = "text";
+						input.id = str1[j];
+						div1.innerHTML = str[j];
+						li.appendChild(div1);
+						li.appendChild(input);
+						make_ins.appendChild(li);
+					}
+				}
+				
+//				数据查看修改
+				data_see.addEventListener('tap',function(){
+					formbtn.classList.add("my_none");
+					myform.classList.add("my_none");
+					data_make.classList.remove("my_none");
+				});
+				
+				
+				//点击修改
+				xg.addEventListener('tap',function(){
+//					alert(selectjcxm)
+					gclx.classList.add("my_none");
+					xg.classList.add("my_none");
+					saveInfo.classList.remove("my_none");
+					gclx_sel.classList.remove("my_none");
+					remark.readOnly=false;
+					var opt = gclx_sel.getElementsByTagName("option");
+					for(var i=0;i<opt.length;i++){
+						if(opt[i].value==gclx.value){
+							opt[i].selected='selected';
+						}
+					}
+					jcxm.classList.add("my_none");
+					jcxm_sel.classList.remove("my_none");
+					//获取检测项目
+					mui.ajax(url+'detection/samDet1.php',{
+						data:{
+							jclx:jclx.value,
+							sjc:sjc_send,
+							flag:"jcxm"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data)
+							for(var i=0;i<data.length;i++){
+								var selected="0";
+								var id = data[i].id;
+								var jcxm = data[i].检测项目;
+								for(var j=1;j<selectjcxm.length;j++){
+									if(id==selectjcxm[j]){
+										selected="1";
+									}
+								}
+								
+								addProject(jcxm,id,selected);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				//动态创建检测项目
+				var sel = document.getElementById("jcxm_sel");
+				var addProject = function(jcxm,xmid,selected){
+					var option = document.createElement("option");
+					option.value = xmid;
+					option.innerHTML = jcxm;
+					if(selected=="1"){
+						option.selected=true;
+					}
+					sel.appendChild(option);
+				}
+				//保存检测数据
+				up_data.addEventListener("tap",function(){
+					up_data.disabled=true;
+					var make_li = document.getElementById("make").getElementsByTagName("input");
+					var data_id = "";
+					var data_in = "";
+					for(var i=0;i<make_li.length;i++){
+						data_id += make_li[i].id+",";
+						data_in += make_li[i].value+",";
+					}
+					mui.ajax(url+'detection/samDet1.php',{
+							data:{
+								flag:'up_data',
+								sjc:sjc.value,
+								data_id:data_id,
+								data_in:data_in,
+							},
+							type:'post',
+	//						dataType:'json',
+							timeout:10000,
+							success:function(data){
+								
+								alert("保存成功");
+								var target=plus.webview.getWebviewById('detection_online');
+								target.reload(true);
+								mui.back();
+							},
+							error:function(xhr,type,errThrown){
+	//							alert('ajax错误 ');
+							}
+						});
+				});
+				//保存修改
+				saveInfo.addEventListener('tap',function(){
+					if(change==1){
+						myform.classList.add("my_none");
+						formbtn.classList.add("my_none");
+						data_insert.classList.remove("my_none");
+						//信息保存
+						var gclx = document.getElementById("gclx_sel").value;
+						var jclx = document.getElementById("jclx").value;
+						var remark = document.getElementById("remark").value;
+						mui.ajax(url+'detection/samDet1.php',{
+							data:{
+								flag:'update',
+								sjc:sjc_send,
+								gclx:gclx,
+								remark:remark,
+							},
+							type:'post',
+							dataType:'json',
+							timeout:10000,
+							success:function(data){
+	//							alert(data)
+							},
+							error:function(xhr,type,errThrown){
+//								alert('ajax错误 ');
+							}
+						});
+					}else{
+						//信息保存
+						var gclx = document.getElementById("gclx_sel").value;
+						var jclx = document.getElementById("jclx").value;
+						var remark = document.getElementById("remark").value;
+						mui.ajax(url+'detection/samDet1.php',{
+							data:{
+								flag:'update',
+								sjc:sjc_send,
+								gclx:gclx,
+								remark:remark,
+							},
+							type:'post',
+							dataType:'json',
+							timeout:10000,
+							success:function(data){
+	//							alert(data)
+								alert("保存成功");
+								mui.back();
+							},
+							error:function(xhr,type,errThrown){
+//								alert('ajax错误 ');
+							}
+						});
+						
+					}
+				});
+				//检测数据保存。检测项目经改动
+				insert_data.addEventListener('tap',function(){
+					insert_data.disabled=true;
+					var make_li = document.getElementById("make_ins").getElementsByTagName("input");
+					var data_id = "";
+					var data_in = "";
+					for(var i=0;i<make_li.length;i++){
+						data_id += make_li[i].id+",";
+						data_in += make_li[i].value+",";
+					}
+					mui.ajax(url+'detection/samDet1.php',{
+						data:{
+							flag:'ins_data',
+							sjc:sjc_send,
+							data_id:data_id,
+							data_in:data_in,
+							jclx:jclxx
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+//								alert(data)
+							alert("保存成功");
+							mui.back();
+						},
+						error:function(xhr,type,errThrown){
+//							alert('ajax错误 ');
+						}
+					});
+				});
+				
+				//获取图片和图片说明
+				var jcr_photo=[];//检测人照片
+				var xczp_photo=[];//现场照片
+				var jcsb_photo=[];//设备照片
+				var jcrText;//检测人照片说明
+				var xczpText;//现场照片说明
+				var jcsbText;//检测设备说明
+				mui.ajax(url+'detection/samDet1.php',{
+					data:{
+						sjc:sjc_send,
+						flag:"fjxx"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						jcr_photo=data.检测人照片.split("~*^*~");
+						xczp_photo=data.现场照片.split("~*^*~");
+						jcsb_photo=data.检测设备照片.split("~*^*~");
+						jcrText = data.检测人照片说明;
+						xczpText = data.现场照片说明;
+						jcsbText = data.检测设备照片说明;
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				//附件查看/修改
+				EditImage.addEventListener('tap',function(){
+					mui.openWindow({
+						url:'editImage.html',
+						extras:{
+							jcr_photo:jcr_photo,//检测人
+							xczp_photo:xczp_photo,//现场
+							jcsb_photo:jcsb_photo,//检测设备
+							jcrText:jcrText,
+							xczpText:xczpText,
+							jcsbText:jcsbText,
+							sjc:sjc_send
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

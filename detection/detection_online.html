@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>江门气象监测系统</title>
+		<title>江门市气象局在线监测系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css">	
 		<link rel="stylesheet" href="../css/my_css.css">
@@ -25,7 +25,13 @@
 				/*position:relative;*/
 				left:9%;
 			}
-			
+			#consigncode2{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
 			#zuyPopover{
 				min-width: 300px;
 				height:150px;				
@@ -90,24 +96,23 @@
 		   			</div>
 				</div> 
 			</div>
-			<!---------------------------------委托检测------------------------------------------->
-			<div id="item1" class="mui-control-content  mui-active">
-			    <div  class="mui-scroll-wrapper">
-			    	<div id="draft" class="mui-scroll rwdiv">
-
-					</div>
-			    </div>
-			</div>
-			<!---------------------------------委托检测------------------------------------------->
 			
-			<!---------------------------------监理见证------------------------------------------->
-			<div id="item2" class="mui-control-content">
-				<div id="scroll" class="mui-scroll-wrapper">
-			    	<div id="witness" class="mui-scroll rwdiv">
-	
-					</div>
-			    </div>
+			<!--委托编号-->
+			<div id="consigncode" class="mui-popover">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+	    			<div class="mui-input-row">
+	    				<label>委托编号:</label>
+	    				<input id="code_input" type="text" class="mui-input-clear" placeholder="输入委托编号">
+	    			</div>    			
+	    		</form>
+				<div id="code_act"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode(this)">确认</button>
+				</div>
 			</div>
+			<!--委托编号-->
 			<!--验证码-->
 			<div id="zuyPopover" class="mui-popover">
         		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
@@ -123,22 +128,6 @@
 					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
 				</div>
 			</div>
-			<!--复检验证码-->
-			<div id="recPopover" class="mui-popover">
-        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
-        		<form class="mui-input-group" style="margin-top: 15px;">
-        			<div class="mui-input-row">
-        				<label >验证码:</label>
-        				<input id="code_recheck" type="number" class="mui-input-clear" placeholder="输入验证码" value="" >
-        			</div>    			
-        		</form>
-				<div id="recheck"  class="mui-button-row my_margintop10px">
-					<button   type="button" class="mui-btn mui-btn-primary" onclick="recheck(this)">确定</button>					
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
-				</div>
-			</div>
-			<!--复检验证码-->
 			<form class="mui-input-group my_none">
 			    <div class="mui-input-row my_none">
 			        <label>企业ID</label>
@@ -169,47 +158,51 @@
 			        <input name="yzm" type="text" id="yzm" class="mui-input-clear" >
 			    </div>
 			</form>
-			<!--验证码-->
-			<!---------------------------------监理见证------------------------------------------->
+			<!---------------------------------委托检测------------------------------------------->
+			<div id="item1" class="mui-control-content  mui-active">
+			    <div  class="mui-scroll-wrapper">
+			    	<div id="draft" class="mui-scroll rwdiv">
+
+					</div>
+			    </div>
+			</div>
+			<!---------------------------------委托检测------------------------------------------->
 			
-			<!---------------------------------检测结果------------------------------------------->
-			<div id="item3" class="mui-control-content">
+			<!---------------------------------监理见证------------------------------------------->
+			<div id="item2" class="mui-control-content">
 				<div id="scroll" class="mui-scroll-wrapper">
-			    	<div id="result" class="mui-scroll rwdiv">
+			    	<div id="witness" class="mui-scroll rwdiv">
 	
 					</div>
 			    </div>
 			</div>
-			<div id="consigncode" class="mui-popover">
-	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
-	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
-	    			<div class="mui-input-row">
-	    				<label>检测报告编号:</label>
-	    				<input id="testNum"  class="mui-input-clear" placeholder="输入检测报告编号">
-	    			</div>    			
-	    		</form>
-				<div id="code_act"  class="mui-button-row my_margintop10px">
-					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode(this)">确认</button>
-				</div>
+			<!---------------------------------监理见证------------------------------------------->
+			
+			<!--------------------------------------结果----------------------------->
+			<div id="item3" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="result" class="mui-scroll rwdiv">
+	    				
+					</div>
+			    </div>
 			</div>
-			<!--复检编号-->
-			<div id="reinspection" class="mui-popover">
+			<div id="consigncode2" class="mui-popover">
 	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
-	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode1">
 	    			<div class="mui-input-row">
 	    				<label>检测报告编号:</label>
-	    				<input id="recheckNum"  class="mui-input-clear" placeholder="输入检测报告编号">
+	    				<input id="testNum" class="mui-input-clear" placeholder="输入检测报告编号">
 	    			</div>    			
 	    		</form>
 				<div id="code_act1"  class="mui-button-row my_margintop10px">
-					<button id=""  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="" type="button" class="mui-btn mui-btn-primary" onclick="recheckNum(this)">确认</button>
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode1(this)">确认</button>
 				</div>
 			</div>
-			<!---------------------------------检测结果------------------------------------------->
+			<!--------------------------------------结果----------------------------->
+			
+		<!--验证码-->
 		</div>
 		
 		<script src="../js/mui.min.js"></script>
@@ -262,16 +255,13 @@
 	            jclx = self.jclx;//检测类型
 				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
 				my_name = decodeURI(decodeURI(my_name)); //获取用户名
-				var item=doc.getElementsByClassName('mui-control-item');
-				var content=doc.getElementsByClassName('mui-control-content');
+				var doc = document;
+				var my_popover = doc.getElementById("my_popover");
 				var draft = doc.getElementById("draft");
-				var ready = doc.getElementById("ready");
 				var witness = doc.getElementById("witness");
-				var sendMsg = doc.getElementById("sendMsg");
-				var code = doc.getElementById('code');
-				var code_recheck = doc.getElementById("code_recheck");
-				var addNew = doc.getElementById("addNew");
-				var jdcj = doc.getElementById("jdcj");
+				var result = doc.getElementById("result");
+				var addnew = doc.getElementById('addNew');
+				var refresh = doc.getElementById("refresh");
 				var myDate = new Date();//获取系统当前时间
 				mytime=myDate.toLocaleString();//获取日期与时间
 				var refresh = doc.getElementById("refresh");
@@ -279,6 +269,42 @@
 				refresh.addEventListener('doubletap',function () {
 					window.location.reload();
 				});
+				//获取当前时间
+				var date = new Date();
+				var year = date.getFullYear(); //获取当前年份
+				var mon = date.getMonth() + 1; //获取当前月份    
+				var da = date.getDate(); //获取当前日    
+				var day = date.getDay(); //获取当前星期几    
+				var h = date.getHours(); //获取小时    
+				var m = date.getMinutes(); //获取分钟  
+				if(da<10){
+					var time01 = year + "-%" + mon + "-0" + da;
+				} else {
+					var time01 = year + "-%" + mon + "-" + da;
+				}
+				//检验这个手机号码今天是否签过到
+				var qd="未签到";
+				mui.ajax(url + 'my_plus/attention_ewm.php', {
+						data: {
+							flag: 'select',
+							gcid: pj_id, //工程id
+							mobile:mobile, //手机
+							qdTime: time01
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data) {
+							if(data.result == 'OK') {
+								qd = "已签到";
+							} else {
+								qd = "未签到";
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+//							return callback('ajax错误' + type + errorThrown);
+						}
+					});
 				//悬浮新增监听
 				addNew.addEventListener('tap',function(){
 					mui.ajax(url+'check.php',{
@@ -293,25 +319,30 @@
 						success:function(data){
 //							alert(data)
 							if(data['单位类型']=='检测单位'||data['单位类型']=='管理'){
-								mui.openWindow({
-									id:'material_add.html',
-									url:"material_add.html",
-									extras:{
-										//传递参数
-										gcmc_c:gcmc_c,
-										my_name:my_name,
-										timestamp:timestamp,
-										detect:detect,
-										jclx:jclx,
-										supvision:supvision
-									},
-									show: {
-										aniShow:"pop-in"
-									},
-									waiting: {
-										autoShow: false
-									}
-								});
+								if(qd=="已签到"){
+									mui.openWindow({
+										id:'material_add.html',
+										url:"material_add.html",
+										extras:{
+											//传递参数
+											gcmc_c:gcmc_c,
+											my_name:my_name,
+											timestamp:timestamp,
+											detect:detect,
+											jclx:jclx,
+											supvision:supvision
+										},
+										show: {
+											aniShow:"pop-in"
+										},
+										waiting: {
+											autoShow: false
+										}
+									});
+								}else{
+									alert("签到后才能进行操作");
+								}
+								
 							}else{
 								alert("抱歉，您没有新建卡项的权限");
 							}
@@ -325,42 +356,45 @@
 				
 				
 				//动态创建函数
-				function mymaterial(gcdzt,id,gclx,jcdw,jclx,jcr,jcrq,sjc){
+				function mymaterial(gcdzt,id,gclx,jcdw,jclx,jcr,jcrq,sjc,count){
 					
-					var ul = document.createElement("ul");
-					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
-					ul.id = id;
-					if(gcdzt=='新增复检'||gcdzt=='取样复检'||gcdzt=='未见证复检'||gcdzt=='已见证复检'||gcdzt=='收样复检'){
-					ul.style.borderColor = "red";	
-					}
 					if(gcdzt=="新增"){
-//						alert(gcdzt+id+gclx+jcdw+jclx+jcr+jcrq+sjc)
-						var quyang = document.getElementById("draft");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="detection_samDet.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc_c+'&type='+"NewAdd"+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +"-"+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：5项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+jcdw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
-						quyang.appendChild(ul);
-					}else if(gcdzt=="新增复检"){
-						var quyang = document.getElementById("draft");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_material_samDetEdit.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc_c+'&supvision='+supvision_c+'&mobile='+mobile+'&detect='+detect_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
-						quyang.appendChild(ul);
-					}else if(gcdzt=="未见证"||gcdzt=="未见证复检"){
+						var draft = document.getElementById("draft");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="online_readmessage.html?sjc='+sjc+'&ulid='+id+'&gcmc='+gcmc_c+'&jcdl='+jclx+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+gclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测类型：'+jclx+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：'+count+'项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
+						draft.appendChild(ul);
+					}else if(gcdzt=="准备"){
+						var draft = document.getElementById("draft");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="detection_samDet.html?sjc='+sjc+'&ulid='+id+'&type=zb"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测类型：'+jclx+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：'+count+'项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						draft.appendChild(ul);
+					}
+					else if(gcdzt=="未见证"){
 						var witness = document.getElementById("witness");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_material_samDet.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +"-"+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：5项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+jcdw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p>';
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="detection_samDet.html?sjc='+sjc+'&ulid='+id+'&type=zb"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测类型：'+jclx+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：'+count+'项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						witness.appendChild(ul);						
-					}else if(gcdzt=="已见证"){
+					}
+					else if(gcdzt=="已见证"){
 						var witness = document.getElementById("witness");
-						ul.innerHTML = '<li id='+sjc+' class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_material_samDet.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +"-"+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：5项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+jcdw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="detection_samDet.html?sjc='+sjc+'&ulid='+id+'&type=jz"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测类型：'+jclx+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：'+count+'项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						witness.appendChild(ul);						
-					}else if(gcdzt=="检测"){
+					}
+					else if(gcdzt=="结果"){
 						var result = document.getElementById("result");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_material_rcvdDet.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc_c+'&pj_id='+pj_id+'&mobile='+mobile+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +"-"+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：5项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+jcdw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
-						result.appendChild(ul);						
-					}else if(gcdzt=="已见证复检"){
-						var witness = document.getElementById("witness");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_material_samDet.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+ operation_supvision +'</p></li>';
-						witness.appendChild(ul);						
-					}else if(gcdzt=="收样复检"){
-						var result = document.getElementById("result");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_material_recheckDet.html?sjc='+sjc+'&gcid='+id+'&state='+'result'+'&status='+gcdzt_c+'&mobile='+mobile+'&gcmc='+gcmc_c+'&pj_id='+pj_id+'&flag='+''+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+ operation_detect +'</p></li>';
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="detection_samDet.html?sjc='+sjc+'&ulid='+id+'&type=jz"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ gclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测类型：'+jclx+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测项目：'+count+'项</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						result.appendChild(ul);						
 					}
 				}
@@ -386,17 +420,18 @@
 								var gclx = data[i].工程类型;
 								var jclx = data[i].检测类型;
 								var jcdw = data[i].检测单位;
-								var jcr = data[i].委托人;
+								var jcr = data[i].检测人;
 								var jcrq = data[i].检测时间;
 								var sjc = data[i].时间戳;
-								mymaterial(gcdzt,id,gclx,jcdw,jclx,jcr,jcrq,sjc);
+								var count = data[i].检测项目个数;
+								mymaterial(gcdzt,id,gclx,jcdw,jclx,jcr,jcrq,sjc,count);
 							}
 						}else{
 							alert("暂无数据");
 						}
 					},
 					error:function(xhr,type,errorThrown){
-//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
 				
@@ -406,7 +441,7 @@
 						flag:'read',
 						mobile:mobile,
 						gcmc:gcmc,
-						submodule:'材料送检'
+						submodule:'实体检测'
 					},
 					dataType:'json',  
 					type:'post',
@@ -423,10 +458,10 @@
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
-				////////////////////////////提交见证（检测单位）//////////////////////////////
+				////////////////////////////委托检测//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
 					var ulId = this.id;//获取当前的卡项的id
-					mui.ajax(url+'check.php',{
+					 mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
 							mobile:mobile,
@@ -436,89 +471,249 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位类型'] == '检测单位'||data['单位类型']=='管理'){
-
-								mui.ajax(url+'detection/online_list.php',{
-									data:{
-										flag:"获取状态",
-										ulid:ulId,
-										gcmc:gcmc,
-										timestamp:timestamp
-									},
-									dataType:'json',
-									type:'POST', 
-									timeout:10000,
-									success:function(data){
-										var gcdzt_pd = data.工程单状态;
-//										alert(gcdzt_pd);
-			
-										//判断状态并根据状态执行改变状态的任务
-										if(gcdzt_pd=='新增'){
-											var btnArray = [
-											{title:"提交见证(检测单位)"},
-											{title:"删除"}
-											]; 
-											plus.nativeUI.actionSheet({
-												title:"操作", 
-												cancel:"取消",
-												buttons:btnArray
-											},function(e){
-												var index = e.index;	
-												//var nextpage='';
-												switch (index){
-													case 1://取样
-														mui.ajax(url+'detection/online_list.php',{
-															data:{
-																flag:"改检测状态",
-																ulid:ulId,
-																gcmc:gcmc,
-																timestamp:timestamp
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-			//													alert(data.结果);
-																mui.toast(data.结果,{ duration:'long', type:'div' })
-																location.reload();//刷新本页面
-															},
-															error:function(xhr,type,errorThrown){
-					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-															}
-														});
-														break;
-													case 2://删除
-														mui.ajax(url+'my_plus/my_material_list.php',{
-															data:{
-																flag:"删除",
-																ulid:ulId,
-																gcmc:gcmc,
-																timestamp:timestamp
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-			//													alert(data.结果);
-																mui.toast(data.结果,{ duration:'long', type:'div' })
-																location.reload();//刷新本页面
-															},
-															error:function(xhr,type,errorThrown){
-					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-															}
-														});
-														break;
-												}	
-											 });
+							if(data['单位类型']=='检测单位'||data['单位类型']=='管理'){
+								if(qd=="已签到"){
+									mui.ajax(url+'detection/online_list.php',{
+										data:{
+											flag:"获取状态",
+											ulid:ulId,
+											gcmc:gcmc,
+											timestamp:timestamp
+										},
+										dataType:'json',
+										type:'POST', 
+										timeout:10000,
+										success:function(data){
+											var gcdzt_pd = data.工程单状态;
+				
+											//判断状态并根据状态执行改变状态的任务
+											if(gcdzt_pd=='新增'){
+												var btnArray = [
+												{title:"提交检测"},
+												{title:"删除"}
+												]; 
+												plus.nativeUI.actionSheet({
+													title:"操作", 
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://准备
+															//输入委托编号
+															mui("#consigncode").popover("toggle");
+															var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
+															but_id.id=ulId;
+															break;
+														case 2://删除
+															mui.ajax(url+'detection/online_list.php',{
+																data:{
+																	flag:"删除",
+																	ulid:ulId,
+																	gcmc:gcmc,
+																	timestamp:timestamp
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+				//													alert(data.结果);
+																	mui.toast(data.结果,{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+															break;
+													}	
+												 });
+											}else if(gcdzt_pd=='准备'){
+												var btnArray = [
+												{title:"提交见证"},
+												{title:"撤销准备"}
+												];
+												plus.nativeUI.actionSheet({
+													title:"操作",
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://提交见证
+															mui.ajax(url+'detection/online_list.php',{
+																data:{
+																	flag:'提交见证',
+																	ulid:ulId,
+																	gcmc:gcmc
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+	//																alert(data)
+																	if(data.结果=='success'){
+										   								mui.toast('操作成功',{ duration:'long', type:'div' }) 
+																		location.reload();
+																	}
+																},
+																error:function(xhr,type,errorThrown){
+																	alert('ajax错误'+type+'---'+errorThrown);
+																}
+															});
+															break;
+														case 2://撤销准备
+															mui.ajax(url+'detection/online_list.php',{
+																data:{
+																	flag:"撤销准备",
+																	ulid:ulId,
+																	gcmc:gcmc,
+																	timestamp:timestamp
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+																	mui.toast(data.结果,{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+															break;
+													}	
+												  }
+												);
+											}
+										},
+										error:function(xhr,type,errorThrown){
+	//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
 										}
-									},
-									error:function(xhr,type,errorThrown){
-			//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-									}
-								});
+									});
+								}else{
+									alert("签到后才能进行操作");
+								}
+								
 							}else{
 								var btnArray = [
-//									{title:data[0]['单位']}
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				////////////////////////////委托检测//////////////////////////////
+				////////////////////////////监理见证//////////////////////////////
+				mui("#witness").on('longtap','ul',function(){
+					var ulId = this.id;
+					  mui.ajax(url+'check.php',{
+						data:{
+							ulId:ulId,
+							mobile:mobile,
+							flag:"online"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if((data['单位类型']=='监理单位')||data['单位类型']=='管理'){
+								if(qd=="已签到"){
+									mui.ajax(url+'detection/online_list.php',{
+										data:{
+											flag:"获取状态",
+											ulid:ulId,
+											gcmc:gcmc,
+											timestamp:timestamp
+										},
+										dataType:'json',
+										type:'POST', 
+										timeout:10000,
+										success:function(data){
+											var gcdzt_pd = data.工程单状态;
+											if(gcdzt_pd=='未见证'){
+												var btnArray = [
+												{title:"确认见证"}
+												];
+												plus.nativeUI.actionSheet({
+													title:"操作",
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://确认见证
+				//											//执行验证码
+															mui("#zuyPopover").popover("toggle");
+															var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+															but_id.id=ulId;
+				//											alert('wait a moment');
+															break;
+													}
+												  }
+												);
+											}else if(gcdzt_pd=='已见证'){
+												var btnArray = [
+												{title:"提交结果"},
+												];
+												plus.nativeUI.actionSheet({
+													title:"操作",
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													switch (index){
+														case 1://提交结果
+															mui.ajax(url+'detection/online_list.php',{
+																data:{
+																	flag:"提交结果",
+																	ulid:ulId,
+																	gcmc:gcmc,
+																	timestamp:timestamp
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+				//													alert("ajax success!");
+				//													alert(data.结果);
+																	mui.toast(data.结果,{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+															break;
+														case 2://
+															break;
+													}	
+												  }
+												);
+											}
+										},
+										error:function(xhr,type,errorThrown){
+	//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+										}
+									});	
+								}else{
+									alert("签到后才能进行操作");
+								}
+								
+							}else{
+								var btnArray = [
 									{title:"抱歉，您没有操作权限"}
 								]; 
 								plus.nativeUI.actionSheet({
@@ -533,129 +728,11 @@
 //							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
+					
 				});
-				////////////////////////////见证（监理单位）//////////////////////////////
-				//长按见证
-				mui("#witness").on('longtap','ul',function(){
-					var ulId = this.id;
-					mui.ajax(url+'check.php',{
-						data:{
-							ulId:ulId,
-							mobile:mobile,
-							flag:"online"
-						},
-						type:'post',
-						dataType:'json',
-						timeout:10000,
-						success:function(data){
-							if((data['单位类型']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位类型']=='管理'){
-								mui.ajax(url+'detection/online_list.php',{
-									data:{
-										flag:"获取状态",
-										ulid:ulId,
-										gcmc:gcmc,
-										timestamp:timestamp
-									},
-									dataType:'json',
-									type:'POST', 
-									timeout:10000,
-									success:function(data){
-										var gcdzt_pd = data.工程单状态;
-			
-										if(gcdzt_pd=='已见证'||gcdzt_pd=='已见证复检'){
-											var btnArray = [
-											{title:"送检"},
-											];
-											plus.nativeUI.actionSheet({
-												title:"操作",
-												cancel:"取消",
-												buttons:btnArray
-											},function(e){
-												var index = e.index;	
-												switch (index){
-													case 1://实测
-													if(gcdzt_pd=='已见证'){
-														mui.openWindow({
-															url:'online_deliver.html',
-															styles: {
-																hardwareAccelerated:false
-															},
-															extras:{
-																//传递参数
-																ulId:ulId,
-																my_name:my_name,
-																timestamp:timestamp,
-																constr:constr,
-																supvision:supvision,
-																detect:detect
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														})
-													}else if(gcdzt_pd=='已见证复检'){
-														mui.openWindow({
-															url:'my_material_recheckDeliver.html',
-															styles: {
-																hardwareAccelerated:false
-															},
-															extras:{
-																//传递参数
-																ulId:ulId,
-																my_name:my_name,
-																timestamp:timestamp,
-																detect:detect
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														})
-													}
-														
-														break;
-													case 2://撤销
-														break;
-												}	
-											  }
-											);
-										}
-									},
-									error:function(xhr,type,errorThrown){
-			//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-									}
-								});
-							}else{
-								var btnArray = [
-//									{title:data[0]['单位']}
-									{title:"抱歉，您没有操作权限"}
-								]; 
-								plus.nativeUI.actionSheet({
-									title:"操作", 
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-								});
-							}
-						},
-						error:function(xhr,type,errThrown){
-							alert("ajax错误");
-						}
-					});
-				});
+				////////////////////////////监理见证//////////////////////////////
 				
-				 ////////////////////////////出结果（检测单位）//////////////////////////////
-				
-				//长按检测
+				 ////////////////////////////结果//////////////////////////////
 				mui("#result").on('longtap','ul',function(){
 					var ulId = this.id;
 					mui.ajax(url+'check.php',{
@@ -665,151 +742,96 @@
 							flag:"online"
 						},
 						dataType:'json',
-						type:'POST', 
+						type:'post',
 						timeout:10000,
 						success:function(data){
-							if((data['单位类型']== '检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位类型']=='管理'){
-								mui.ajax(url+'detection/online_list.php',{
-									data:{
-										flag:"获取状态",
-										ulid:ulId,
-										gcmc:gcmc,
-										timestamp:timestamp
-									},
-									dataType:'json',
-									type:'POST', 
-									timeout:10000,
-									success:function(data){
-										var gcdzt_pd = data.工程单状态;
-										var btnArray = [
-											{title:"合格"},
-											{title:"不合格"},
-											];
-											plus.nativeUI.actionSheet({
-												title:"操作",
-												cancel:"取消",
-												buttons:btnArray
-											},function(e){
-												var index = e.index;	
-												//var nextpage='';
-												switch (index){
-													case 1://结果(合格)
-													if(gcdzt_pd=='检测'){
-														var btnArray = ['是', '否'];
-														mui.confirm('确定将该检测鉴定为合格？', '江门气象监测系统', btnArray, function(e) {
-															if (e.index == 0) {
-																//输入检测报告编号
-																mui("#consigncode").popover("toggle");
-																var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
-																but_id.id=ulId;
-															}	
-														});
-													}else if(gcdzt_pd=='收样复检'){
-														var btnArray = ['是', '否'];
-														mui.confirm('确定将该检测鉴定为合格？', '江门气象监测系统', btnArray, function(e) {
-															if (e.index == 0) {
-																//输入检测报告编号
-																mui("#reinspection").popover("toggle");
-																var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
-																but_id.id=ulId;
-															}	
-														});
-													}
-													
-													break;
-													case 2://不合格
-													if(gcdzt_pd=='检测'){
-														var btnArray = ['是', '否'];
-														mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
-															if (e.index == 0) {
-																//不合格推送通知
-																var server=url+"push/push.php";
-																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){
-																	//推送完成
-																	if(status==200){
-																		alert("不合格出现!将通知各单位");
-																	}else{
-																		alert("失败");
-																	}
+							if((data['单位类型']== '检测单位')||data['单位类型']=='管理'){
+								if(qd=="已签到"){
+									mui.ajax(url+'detection/online_list.php',{
+										data:{
+											flag:"获取状态",
+											ulid:ulId,
+											gcmc:gcmc,
+											timestamp:timestamp
+										},
+										dataType:'json',
+										type:'POST', 
+										timeout:10000,
+										success:function(data){
+											var gcdzt_pd = data.工程单状态;
+											if(gcdzt_pd=='结果'){
+												var btnArray = [
+												{title:"合格"},
+												{title:"不合格"}
+												];
+												plus.nativeUI.actionSheet({
+													title:"操作",
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													switch (index){
+														case 1://合格
+															var btnArray = ['是', '否'];
+																mui.confirm('确定将该送检鉴定为合格？', '江门市气象局在线监测系统', btnArray, function(e) {
+																	if (e.index == 0) {
+																		//输入检测报告编号
+																		mui("#consigncode2").popover("toggle");
+																		var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
+																		but_id.id=ulId;
+																	}	
 																});
-																task.addData("title",'江门市建设工程施工质量管理系统');
-																task.addData("notice",gcmc+'——（在线检测）出现新的不合格项目！');
-																task.addData("pj_id",pj_id);
-																task.start();
-																mui.openWindow({
-																	url:'my_material_fail.html',
-																	styles: {
-																		hardwareAccelerated:false
-																	},
-																	extras:{
-																		//传递参数
-																		ulId:ulId,
-																		timestamp:timestamp
-																	},
-																	show:{
-																		autoShow:true,//页面loaded事件发生后自动显示
-																		aniShow:'slide-in-right',//页面显示动画
-																		duration:'100'//页面动画持续时间
-																	},
-																	waiting:{
-																		autoShow:false,//自动显示等待框
-																	}
-																})
-															} else {
-																
-															}
-														});
-													}else if(gcdzt_pd=='收样复检'){
-														var btnArray = ['是', '否'];
-														mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
-															if (e.index == 0) {
-																//不合格推送通知
-																var server=url+"push/push.php";
-																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-																	//推送完成
-																	if(status==200){
-																		alert("不合格出现!将通知各单位");
-																	}else{
-																		alert("失败");
-																	}
-																});
-																task.addData("title",'江门市建设工程施工质量管理系统');
-																task.addData("notice",gcmc+'——（材料送检）出现新的不合格项目！');
-																task.addData("pj_id",pj_id);
-																task.start();
-																mui.openWindow({
-																	url:'my_material_fail.html',
-																	styles: {
-																		hardwareAccelerated:false
-																	},
-																	extras:{
-																		//传递参数
-																		ulId:ulId,
-																		timestamp:timestamp,
-																		state:'recheck',
-																		flag:''
-																	},
-																	show:{
-																		autoShow:true,//页面loaded事件发生后自动显示
-																		aniShow:'slide-in-right',//页面显示动画
-																		duration:'100'//页面动画持续时间
-																	},
-																	waiting:{
-																		autoShow:false,//自动显示等待框
-																	}
-																});
-															}
-														});
-													}
-													break;
-												}	
-											  }
-											);
-											}	
-										});	
+															break;
+														case 2://不合格
+															//不合格推送通知
+	//														var server=url+"push/push.php";
+	//														var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+	//															//推送完成
+	//															if(status==200){
+	//																alert("不合格出现!将通知各单位");
+	//															}else{
+	//																alert("失败");
+	//															}
+	//														});
+	//														task.addData("title",'江门市建设工程施工质量管理系统');
+	//														task.addData("notice",gcmc+'——（实体检测）出现新的不合格项目！');
+	//														task.addData("pj_id",pj_id);
+	//														task.start();
+															mui.openWindow({
+																url:'online_fail.html',
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
+															break;
+													}	
+												  }
+												);
+											}
+											
+										},
+										error:function(xhr,type,errorThrown){
+	//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+										}
+									});
+								}else{
+									alert("签到后才能进行操作");
+								}
+								
 							}else{
 								var btnArray = [
-//									{title:data[0]['单位']}
 									{title:"抱歉，您没有操作权限"}
 								]; 
 								plus.nativeUI.actionSheet({
@@ -821,10 +843,11 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+'---'+errorThrown);
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
-					});
+					});	
 				});
+				////////////////////////////结果//////////////////////////////
 			});
 			
 			//验证码监听
@@ -848,7 +871,7 @@
 						var smsContent = document.getElementById("smsContent");
 						mobPhone.value = mobile;
 						yzm = document.getElementById("yzm");
-						mui.ajax(url+'send_Sms/SendSms.php',{
+						mui.ajax(url+'sms/SendSms.php',{
 							data:{
 								CorpID:CorpID.value,
 								LoginName:LoginName.value,
@@ -866,11 +889,11 @@
 //									alert(data.smsContent);
 									yzm.value = data.yzm; //获取验证码数字
 									//添加短信记录								
-									mui.ajax(url+'send_Sms/AddSms.php',{
+									mui.ajax(url+'sms/AddSms.php',{
 										data:{
 											flag:'add',
 											SecurityCode:data.yzm,
-											submodule:'材料送检',
+											submodule:'在线检测',
 											gcmc:gcmc,
 											mytime:mytime,
 											my_name:my_name,
@@ -903,29 +926,34 @@
 			}
 			//验证验证码
 			function qdjz(jzid){
-				var jzid = jzid.id;
+				var ulid = jzid.id;
 				if(yzm.value==""){
 					mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
 				}else if(code.value==""){
 					mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
 				}else if(code.value==yzm.value){
 					//确定见证
-					mui.ajax(url+'my_plus/my_material_list_longtap.php',{
-						data:{
-							gcdzt:'jzz',
-							gcdId:jzid
+					mui.openWindow({
+						url:'online_change.html',
+						styles: {
+							hardwareAccelerated:false
 						},
-						dataType:'json',
-						type:'POST', 
-						timeout:10000,
-						success:function(data){
-							if(data.result=='success'){
-   								mui.toast('见证成功',{ duration:'long', type:'div' }) 
-								location.reload();
-							}
+						extras:{
+							//传递参数
+							ulid:ulid,
+							timestamp:timestamp,
+							my_name:my_name,
+							constr:constr,//施工单位
+							supvision:supvision,//监理单位
+							detect:detect//检测单位
 						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown);
+						show:{
+							autoShow:true,//页面loaded事件发生后自动显示
+							aniShow:'slide-in-right',//页面显示动画
+							duration:'100'//页面动画持续时间
+						},
+						waiting:{
+							autoShow:false,//自动显示等待框
 						}
 					});
 				}else{
@@ -967,8 +995,32 @@
 			//检测报告编号
 			function inpcode(obj){
 				var ulId = obj.id;
+				var code_input = document.getElementById('code_input').value;
+				mui.ajax(url+'detection/online_list.php',{
+					data:{
+						flag:"准备",
+						ulid:ulId,
+						gcmc:gcmc,
+						timestamp:timestamp,
+						code_input:code_input
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						mui.toast(data.结果,{ duration:'long', type:'div' })
+						location.reload();//刷新本页面
+					},
+					error:function(xhr,type,errorThrown){
+											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});	
+			}
+			//报告编号
+			function inpcode1(obj){
+				var ulId = obj.id;
 				var testNum = document.getElementById('testNum').value;
-//				alert(code);
+//				alert(testNum);
 				mui.ajax(url+'detection/online_list.php',{
 					data:{
 						flag:"合格",
@@ -981,8 +1033,41 @@
 					type:'POST', 
 					timeout:10000,
 					success:function(data){
-						mui.toast(data.结果,{ duration:'long', type:'div' })
-						location.reload();//刷新本页面
+//						alert(data.结果);
+						if(data.条数==0){
+							var btnArray = ['是', '否'];
+							mui.confirm('确定将该检测类型闭合？', '江门市气象局在线监测系统', btnArray, function(e) {
+								if (e.index == 0) {
+									mui.ajax(url+'detection/online_list.php',{
+										data:{
+											flag:"进入下一个检测",
+											gcmc:gcmc,
+											timestamp:timestamp
+										},
+										dataType:'json',
+										type:'POST', 
+										timeout:10000,
+										success:function(data){
+											var abc = [];
+											abc[0] = 'detection_online';
+											abc[1] = '../detection/classification.html';
+//											alert(data);
+											for(var i=0;i<2;i++){
+												plus.webview.close(abc[i]);
+											}
+											
+										},
+										error:function(xhr,type,errorThrown){
+//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+										}
+									});	
+								}	
+							});
+						}else{
+							mui.toast('操作成功',{ duration:'long', type:'div' }) 
+							location.reload();
+						}
+						
 					},
 					error:function(xhr,type,errorThrown){
 //											alert('ajax错误'+type+'---'+errorThrown+"失败！");

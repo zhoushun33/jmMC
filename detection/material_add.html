@@ -67,10 +67,6 @@
 		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
-		            <label>合格证编号:</label>
-		            <input id="qualifiedNum" type="text" class="mui-input-clear" placeholder="请输入合格证编号"  >
-		        </div>
-		        <div class="mui-input-row">
 		            <label>备注:</label>
 		            <input id="remark" type="text" class="mui-input-clear" placeholder="请输入备注信息" \ >
 		        </div>
@@ -112,7 +108,7 @@
 			
 			<!--处理图片-->
 		    <form id="img_content" class="my_none" >
-	        	<!--委托人照片-->
+	        	<!--检测前照片-->
 	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
 		        	<span style="padding-bottom: 10px;">检测人照片</span>
 		        	<br/>
@@ -121,30 +117,29 @@
 		        <div class="mui-input-group" >
 		        	<div  class="mui-input-row">
 			            <label>检测人照片说明:</label>
-			            <input id="sceneText" type="text" class="mui-input-clear" placeholder="请输入场景图片说明">
+			            <input id="Text1" type="text" class="mui-input-clear" placeholder="请输入说明">
 		        	</div>
 		        </div>
 		        <div>
 		        	<ul id="history_cj" class="dlist" style="text-align:left;">
 						<li id="empty_cj" class="ditem-empty">无历史记录</li>
 					</ul>
-					
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean1" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
 		        </div>
-		        <!--检测设备照片-->
+		        <!--检测实施过程照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">检测设备照片</span>
+		        	<span style="padding-bottom: 10px;">现场照片</span>
 		        	<br/>
 		        	<div><img id="newUpload2" src="../image/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
-		        <div class="mui-input-group" >
+		         <div class="mui-input-group" >
 		        	<div  class="mui-input-row">
-			            <label>检测设备照片说明:</label>
-			            <input id="sampleText" type="text" class="mui-input-clear" placeholder="请输入样品说明">
+			            <label>现场照片说明:</label>
+			            <input id="Text2" type="text" class="mui-input-clear" placeholder="请输入说明">
 		        	</div>
 		        </div>
 		        <div>
@@ -152,10 +147,32 @@
 						<li id="empty_yp" class="ditem-empty">无历史记录</li>
 					</ul>
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<!--<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>-->
+		        </div>
+		        <!--检测设备照片-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">检测设备照片</span>
+		        	<br/>
+		        	<div><img id="newUpload3" src="../image/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测设备照片说明:</label>
+			            <input id="Text3" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_teqm" class="dlist" style="text-align:left;">
+						<li id="empty_teqm" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean2" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
-		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
-		        	<button id="sdata" type="button" disabled="disabled" class="mui-btn mui-btn-primary" onclick="datamake()">检测数据</button>
+		        	<button id="clean_teqm" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('teqm');">清空记录</button>
+		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_teqm');">附件上传</button>
+		        	<button id="data" type="button" class="mui-btn mui-btn-primary" disabled="disabled" onclick="datamake();">检测数据</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -193,7 +210,6 @@
 				var save = doc.getElementById("save");
 				var sjc=doc.getElementById('sjc');
 				var jcr = doc.getElementById("jcr");
-				var qualifiedNum = doc.getElementById("qualifiedNum");
 				var jcrq = doc.getElementById("jcrq");
 				var remark = doc.getElementById("remark");
 				var jcdw = doc.getElementById('jcdw');
@@ -234,8 +250,24 @@
 					var option = document.createElement("option");
 					option.value = xmid;
 					option.innerHTML = jcxm;
+					option.selected = true;
 					sel.appendChild(option);
 				}
+				
+				//由于默认全选，点击先执行一遍显示
+				sel.addEventListener('click',function(){
+					//获取选择的检测项目
+					var sele = sel.getElementsByTagName("option");
+					var choose = "";
+					var chooseid = "";
+					for(var i=0;i<sele.length;i++){
+						if(sele[i].selected){
+							chooseid+=sele[i].value+",";
+							choose+=sele[i].innerHTML+",";
+						}
+					}
+					makeProject(choose,chooseid);
+				});
 				
 				//根据检测项目创建填写数据页面
 				sel.addEventListener('change',function(){
@@ -297,7 +329,6 @@
 					var jclx = document.getElementById("jclx").value;
 					var jcr = document.getElementById("jcr").value;
 					var jcrq = document.getElementById("jcrq").value;
-					var qualifiedNum = document.getElementById("qualifiedNum").value;
 					var remark = document.getElementById("remark").value;
 					var jcdw = document.getElementById("jcdw").value;
 					mui.ajax(url+'my_plus/my_material_upload.php',{
@@ -308,7 +339,6 @@
 							jclx:jclx,
 							jcr:jcr,
 							jcrq:jcrq,
-							qualifiedNum:qualifiedNum,
 							remark:remark,
 							jcdw:jcdw,
 							timestamp:timestamp,
@@ -328,6 +358,7 @@
 					var img_content=document.getElementById('img_content');
 					var formbtn=document.getElementById("formbtn");
 					myform.classList.add('my_none');
+					myform2.classList.add('my_none');
 					formbtn.classList.add('my_none');			
 					img_content.classList.remove('my_none');
 					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框

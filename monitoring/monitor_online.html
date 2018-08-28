@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
+		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
+		<style>
+			.consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			#reinspection{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			#consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			#zuyPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+
+			}
+			#recPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#inspect1_code{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#inspect2_code{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#commissionNum{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#commission_code{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#commissionNum2{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+		</style>
+	</head>
+
+	<body>
+	    <header class="mui-bar mui-bar-nav">
+	        <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="mui.back()"></a>
+	        <h1 id="refresh" class="mui-title">任务列表</h1>
+	    </header>
+	    <div class="mui-content">
+	    	<p style="text-align: center;">*蓝色表示待处理事项,红色表示不合格项目</p>
+	   		<div style="padding-bottom: 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<div class="mui-slider">
+		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
+		        		   	<div class="mui-slider-item">
+								<a id="a4" class="mui-control-item  mui-active"  href="#item4">
+									在线检测(0)
+								</a>
+		         		    </div>
+		      		  	</div>
+		   			</div>
+				</div> 
+			</div>
+			<!--验证码-->
+			<div id="zuyPopover" class="mui-popover">
+        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+        		<form class="mui-input-group" style="margin-top: 15px;">
+        			<div class="mui-input-row">
+        				<label>验证码:</label>
+        				<input id="code1" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+        			</div>    			
+        		</form>
+				<div id="comfirm"  class="mui-button-row my_margintop10px">
+					<button   type="button" class="mui-btn mui-btn-primary" onclick="qdjz(this)">确定</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+				</div>
+			</div>
+			<!----------------------实体检测 ------------------------->
+			<div id="item4" class="mui-control-content mui-active ">
+			    <div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="online" class="mui-scroll rwdiv">
+
+					</div>
+			    </div>
+			</div>
+			<!--委托编号-->
+			<div id="commissionNum" class="mui-popover">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+	    			<div class="mui-input-row">
+	    				<label>委托编号:</label>
+	    				<input id="code_input" type="number" class="mui-input-clear" placeholder="输入委托编号">
+	    			</div>    			
+	    		</form>
+				<div id="code_act2"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="comcode(this)">确认</button>
+				</div>
+			</div>
+			<!--委托编号-->
+			<!--验证码-->
+			<div id="commission_code" class="mui-popover">
+        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+        		<form class="mui-input-group" style="margin-top: 15px;">
+        			<div class="mui-input-row">
+        				<label>验证码:</label>
+        				<input id="code4" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+        			</div>    			
+        		</form>
+				<div id="comConfirm"  class="mui-button-row my_margintop10px">
+					<button   type="button" class="mui-btn mui-btn-primary" onclick="comyzm(this)">确定</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+				</div>
+			</div>
+			<!--检测报告编号-->
+			<div id="commissionNum2" class="mui-popover">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode1">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="comNum" type="number" class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="frame"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="testcode(this)">确认</button>
+				</div>
+			</div>
+			<!----------------------实体检测 ------------------------->
+			
+			
+	    </div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script src="../js/public.js"></script><!--公共方法-->
+		<script src="../js/send.js"></script><!--材料送检-->
+		</script>
+		<script type="text/javascript">
+			//区域滚动,需手动初始化scroll控件
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			mui.plusReady(function(){
+				mui.init({
+					gestureConfig:{					
+						longtap: true, //长按默认为false
+						doubletap: true
+					},
+					pullRefresh : {
+						container : '#refreshContainer', //一个功能的一部分
+					}
+				});
+				function pullfresh() {
+				     //业务逻辑代码，比如通过ajax从服务器获取新数据；
+				     //注意，加载完新数据后，必须执行如下代码，注意：若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
+//				     mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+				     this.endPullupToRefresh(true|false); 
+				}
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				var unitType = geturl("unitType");
+				//获取传值
+				var self = plus.webview.currentWebview();
+				var mobile = self.mobile;
+				var uid = self.uid;
+				//				获取我对应的时间戳
+				mui.ajax(url+'online/online_notise.php',{
+					data:{
+						flag:'获取工程时间戳',
+						uid:uid
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var sjc = [];
+						var length = data.length;
+						sjc = data[length-1].sjc;
+						for(var i=0;i<length-1;i++){
+							sjc[i] = data[i].时间戳;
+						}
+						jckx(sjc);
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				//动态创建检测卡项
+				var jckx = function(sjc_arr){
+					for(var i=0;i<sjc_arr.length;i++){
+						mui.ajax(url+'online/online_notise.php',{
+							data:{
+								flag:"在线检测内容",
+								unitType:unitType,
+								sjc:sjc_arr[i]
+							},
+							type:'post',
+							dataType:'json',
+							timeout:10000,
+							success:function(data){
+//								alert(data)
+								if(data.length>0){
+									for(var i=0;i<data.length;i++){
+										var ulid = data[i].id;
+										var ulsjc = data[i].时间戳;
+										var gcmc = data[i].工程名称;
+										var gcdzt = data[i].工程单状态;
+										var jclx = data[i].检测类型;
+										var jcr = data[i].检测人;
+										var jcsj = data[i].检测时间;
+										addul(ulid,ulsjc,gcmc,gcdzt,jclx,jcr,jcsj);
+									}
+								}
+								
+							},
+							error:function(xhr,type,errorThrown){
+	//								alert('ajax错误'+type+'---'+errorThrown+"失败！");
+							}
+						});
+					}
+				}
+				
+				//动态创建卡项
+				var k=0;
+				function addul(ulid,ulsjc,gcmc,gcdzt,jclx,jcr,jcsj){
+					k++;
+					if(gcdzt=="新增"){
+						type = "zb";
+						color = 'blue2';
+						cz = "提交检测";
+					}else if(gcdzt=="准备"){
+						type = "zb";
+						color = 'blue2';
+						cz = "提交见证";
+					}else if(gcdzt=="未见证"){
+						type = "zb";
+						color = 'blue2';
+						cz = "见证";
+					}else if(gcdzt=="已见证"){
+						type = "jz";
+						color = 'blue2';
+						cz = "提交结果";
+					}else if(gcdzt=="结果"){
+						type = "jz";
+						color = 'blue2';
+						cz = "结果报告";
+					}
+					else if(gcdzt=='不合格'){
+						type = "bhg";
+						color = 'red';
+						cz = "不合格处理";
+					}else if(gcdzt=="待审批"){
+						type = "dsp";
+						color = 'blue2';
+						cz = "确认";
+					}
+					
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = ulid;
+					var online = document.getElementById("online"); 
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="monotor_see.html?sjc='+ulsjc+'&ulid='+ulid+'&type='+type+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ gcmc +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测类型：'+jclx+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcsj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作：'+cz+'</p></li>';
+					online.appendChild(ul);
+					a4.innerHTML = "在线检测("+k+")";
+				}
+				
+				//长按操作
+				mui('#online').on('longtap','ul',function(){
+//					alert("请进入工程签到后操作");
+				});
+			});
+		</script>
+	</body>
+
+</html>

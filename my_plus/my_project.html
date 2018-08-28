@@ -18,16 +18,28 @@
 		</header>
 		<div class="mui-content">
 		    <ul id="my_list" class="mui-table-view mui-grid-view mui-grid-9 my_list">
+		    	<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="my_project_atta.html">
+	                    <span class="mui-icon iconfont icon-zhunbei"></span>
+	                    <div class="mui-media-body">附件查看</div> 
+	            	</a>
+	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 	            	<a href="../detection/classification.html">
-	                    <span class="mui-icon iconfont icon-zhunbei"></span>
+	                    <span class="mui-icon iconfont icon-yanshoutongguo"></span>
 	                    <div class="mui-media-body">在线检测</div> 
 	            	</a>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-	            	<a href="my_inspection.html">
-	                    <span class="mui-icon iconfont icon-zijian"></span>
+	            	<a href="#">
+	                    <span class="mui-icon iconfont icon-zonghechaxun "></span>
 	                    <div class="mui-media-body">综合查询</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../detection/qualifuied.html">
+	                    <span class="mui-icon iconfont icon-xiangmu"></span>
+	                    <div class="mui-media-body">综合结果</div> 
 	            	</a>
 	            </li>
 	        </ul> 
@@ -69,25 +81,6 @@
 				if(title_length>17){
 					titleName.style.fontSize = '9px';
 				}
-				mui.ajax(url+'check.php',{
-					data:{
-						ulId:"",
-						mobile:mobile,
-						flag:"commission"
-					},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					success:function(data){
-						if(data['单位']=='监督机构'||data['单位']=='检测单位'||data['单位']=='管理员'){
-							var supervision = document.getElementById('my_supervision');//监督抽检
-							supervision.classList.remove('my_none');
-						}
-					},
-					error:function(xhr,type,errorThrown){
-//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
-					}
-				});
 				
 				//主列表点击事件 ,把项目id传到所有子页面中
 				mui('#my_list').on('tap', 'a', function() {

@@ -7,7 +7,7 @@
 	"id": "H56E096EF",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "江门气象监测",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0",/*应用版本名称*/
+		"name": "2018.8.27.1.0",/*应用版本名称*/
 		"code": ""
 	},
 	"description": "",/*应用描述信息*/
@@ -189,7 +189,7 @@
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": ""
+					"ldpi": "","hdpi":"C:/Users/ASUS/Pictures/Camera Roll/480.png","xhdpi":"C:/Users/ASUS/Pictures/Camera Roll/720.png","xxhdpi":"C:/Users/ASUS/Pictures/Camera Roll/1080.png"
 				}
 			},"debug":true
 		}
@@ -251,7 +251,9 @@
 					"my_plus/my_project_list.html",
 					"my_plus/my_setting.html",
 					"my_change/my_zhenggai.html",
-					"my_count/my_count.html"
+					"my_count/my_count.html",
+					"count/count_online.html",
+					"monitoring/monitor_online.html"
 				],
 				"priority": 0
 			},
@@ -337,7 +339,10 @@
 					"my_plus/my_project_zhcx.html",
 					"my_plus/my_project_zlsc.html",
 					"detection/detection_online.html",
-					"detection/classification.html"
+					"detection/classification.html",
+					"detection/qualifuied.html",
+					"my_plus/my_project_atta.html",
+					"my_plus/my_project.html"
 				],
 				"priority": 0
 			},
@@ -430,7 +435,8 @@
 				],
 				"refer": [
 					"my_plus/my_setting_wdzh.html",
-					"barcode_scan.html"
+					"barcode_scan.html",
+					"my_setting_wdzh.html"
 				],
 				"priority": 0
 			},
@@ -945,7 +951,11 @@
 				"refer": [
 					"detection/material_add.html",
 					"detection/detection_samDet.html",
-					"detection/online_deliver.html"
+					"detection/online_deliver.html",
+					"detection/online_true.html",
+					"detection/online_fail.html",
+					"detection/online_change.html",
+					"detection/online_readmessage.html"
 				],
 				"priority": 0
 			},
@@ -966,7 +976,9 @@
 			"detection/detection_samDet.html": {
 				"resources": [],
 				"refer": [
-					"detection/detection_online.html"
+					"detection/detection_online.html",
+					"detection/readimage.html",
+					"detection/qualifuied.html"
 				],
 				"priority": 0
 			},
@@ -974,6 +986,72 @@
 				"resources": [],
 				"refer": [
 					"detection/camera_image.html"
+				],
+				"priority": 0
+			},
+			"count/count_online.html": {
+				"resources": [],
+				"refer": [
+					"count/online_data.html"
+				],
+				"priority": 0
+			},
+			"detection/online_fail.html": {
+				"resources": [],
+				"refer": [
+					"detection/camera_image.html"
+				],
+				"priority": 0
+			},
+			"detection/qualifuied.html": {
+				"resources": [],
+				"refer": [
+					"detection/qualifuied_change.html",
+					"detection/detection_samDet.html"
+				],
+				"priority": 0
+			},
+			"detection/qualifuied_change.html": {
+				"resources": [],
+				"refer": [
+					"detection/camera_image.html"
+				],
+				"priority": 0
+			},
+			"detection/online_readmessage.html": {
+				"resources": [],
+				"refer": [
+					"detection/detection_online.html",
+					"detection/editImage.html"
+				],
+				"priority": 0
+			},
+			"detection/editImage.html": {
+				"resources": [],
+				"refer": [
+					"detection/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_plus/my_project_atta.html": {
+				"resources": [],
+				"refer": [
+					"detection/camera_image.html"
+				],
+				"priority": 0
+			},
+			"monitoring/monitor_online.html": {
+				"resources": [],
+				"refer": [
+					"monitoring/monotor_see.html"
+				],
+				"priority": 0
+			},
+			"monitoring/monotor_see.html": {
+				"resources": [],
+				"refer": [
+					"monitoring/monitor_online.html",
+					"detection/readimage.html"
 				],
 				"priority": 0
 			}

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>江门气象监测系统</title>
+		<title>江门市气象局在线监测系统</title>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/my_css.css" rel="stylesheet" />
@@ -120,6 +120,10 @@
 					<input id='unit' type="text" class="mui-input-clear mui-input" placeholder="" value="">
 				</div>
 				<div class="mui-input-row my_none">
+					<label>单位类型</label>
+					<input id='unitType' type="text" class="mui-input-clear mui-input" placeholder="" value="">
+				</div>
+				<div class="mui-input-row my_none">
 					<label>单位名称</label>
 					<input id='unitName' type="text" class="mui-input-clear mui-input" placeholder="" value="">
 				</div>
@@ -159,6 +163,7 @@
 						var mobile = document.getElementById("shji");
 						var my_name = document.getElementById("my_name");
 						var uid = document.getElementById("uid");
+						var unitType = document.getElementById("unitType");
 						var unitName = document.getElementById("unitName");
 						setTimeout(function() {
 							$.openWindow({
@@ -173,7 +178,7 @@
 									my_name:my_name.value,
 									uid:uid.value,
 									unit:unit.value,
-									unitName:unitName.value
+									unitName:unitName.value+","+unitType.value//单位名称+单位类型
 								},
 								waiting: {		
 									autoShow: true,

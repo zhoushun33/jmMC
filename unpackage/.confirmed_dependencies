@@ -2,7 +2,8 @@
 	"login.html": {
 		"refer": [
 			"reg.html",
-			"index.html"
+			"index.html",
+			"forget_password.html"
 		]
 	},
 	"index.html": {
@@ -18,7 +19,9 @@
 	"my.html": {
 		"refer": [
 			"my_plus/my_project_list.html",
-			"my_plus/my_setting.html"
+			"my_plus/my_setting.html",
+			"count/count_online.html",
+			"monitoring/monitor_online.html"
 		]
 	},
 	"my_plus/my_project_list.html": {
@@ -30,14 +33,21 @@
 		"refer": [
 			"my_plus/my_project_list.html",
 			"detection/detection_online.html",
-			"detection/classification.html"
+			"detection/classification.html",
+			"detection/qualifuied.html",
+			"my_plus/my_project_atta.html",
+			"my_plus/my_project.html"
 		]
 	},
 	"detection/detection_online.html": {
 		"refer": [
 			"detection/material_add.html",
 			"detection/detection_samDet.html",
-			"detection/online_deliver.html"
+			"detection/online_deliver.html",
+			"detection/online_true.html",
+			"detection/online_fail.html",
+			"detection/online_change.html",
+			"detection/online_readmessage.html"
 		]
 	},
 	"detection/classification.html": {
@@ -52,12 +62,67 @@
 	},
 	"detection/detection_samDet.html": {
 		"refer": [
-			"detection/detection_online.html"
+			"detection/detection_online.html",
+			"detection/readimage.html",
+			"detection/qualifuied.html"
 		]
 	},
 	"detection/online_deliver.html": {
 		"refer": [
 			"detection/camera_image.html"
+		]
+	},
+	"count/count_online.html": {
+		"refer": [
+			"count/online_data.html"
+		]
+	},
+	"detection/online_fail.html": {
+		"refer": [
+			"detection/camera_image.html"
+		]
+	},
+	"detection/qualifuied.html": {
+		"refer": [
+			"detection/qualifuied_change.html",
+			"detection/detection_samDet.html"
+		]
+	},
+	"detection/qualifuied_change.html": {
+		"refer": [
+			"detection/camera_image.html"
+		]
+	},
+	"detection/online_readmessage.html": {
+		"refer": [
+			"detection/detection_online.html",
+			"detection/editImage.html"
+		]
+	},
+	"detection/editImage.html": {
+		"refer": [
+			"detection/camera_image.html"
+		]
+	},
+	"my_plus/my_project_atta.html": {
+		"refer": [
+			"detection/camera_image.html"
+		]
+	},
+	"my_plus/my_setting.html": {
+		"refer": [
+			"my_setting_wdzh.html"
+		]
+	},
+	"monitoring/monitor_online.html": {
+		"refer": [
+			"monitoring/monotor_see.html"
+		]
+	},
+	"monitoring/monotor_see.html": {
+		"refer": [
+			"monitoring/monitor_online.html",
+			"detection/readimage.html"
 		]
 	}
 }

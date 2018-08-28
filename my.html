@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>江门气象监测系统</title>
+		<title>江门市气象局在线监测系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 	</head>
@@ -13,7 +13,7 @@
 		    <ul class="mui-table-view mui-table-view-chevron my_list">
 				<li class="mui-table-view-cell mui-media">
 					<a class="mui-navigate-right" open-type="common" id="my_pj" >
-						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<img class="mui-media-object mui-pull-left" src="image/my_pj.png">
 						<div class="mui-media-body">
 							我的工程
 							<p id='www' class='mui-ellipsis'>正在加载...</p>
@@ -22,16 +22,16 @@
 				</li>
 				<li class="mui-table-view-cell mui-media" >
 					<a id="task" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<img class="mui-media-object mui-pull-left" src="image/my_pj.png">
 						<div class="mui-media-body">
 							在线检测
-							<p class='mui-ellipsis'>正在加载...</p>
+							<p id="p0" class='mui-ellipsis'>正在加载...</p>
 						</div>
 					</a>
 				</li>
 		    	<li class="mui-table-view-cell mui-media" >
 					<a id="count" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<img class="mui-media-object mui-pull-left" src="image/my_pj.png">
 						<div class="mui-media-body">
 							统计分析
 							<p class='mui-ellipsis'>汇总统计实测实量数据</p>
@@ -44,7 +44,7 @@
 		    <ul class="mui-table-view mui-table-view-chevron my_list">
 				<li class="mui-table-view-cell mui-media">
 					<a class='mui-navigate-right' href="my_plus/my_setting.html">
-						<img class="mui-media-object mui-pull-left" src="image/xinhao.jpg">
+						<img class="mui-media-object mui-pull-left" src="image/my_pj.png">
 						<div class="mui-media-body">
 							更多设置
 							<p class='mui-ellipsis'>个人信息，系统设置等</p>
@@ -64,15 +64,40 @@
 				//全局变量mobile
 				mobile = self.mobile;
 				my_name = self.my_name;
-				uid = self.uid;
-				unitName = self.unitName;
-				unit_d = self.unit;
+				uid = self.uid;//用户id
+				nt = self.unitName;//单位名称+单位类型
+				str = nt.split(",");
+				unitName = str[0];//单位名称
+				unitType = str[1];//单位类型
+				unit_d = self.unit;//单位id
 				unit = encodeURI(encodeURI(unit_d));
 				my_name = encodeURI(encodeURI(my_name));
 				var my_pj = document.getElementById("my_pj");
+				var my_count = document.getElementById("count");
 				var task = document.getElementById("task");
 				var p = document.getElementsByTagName("p");
-				my_pj.href = "my_plus/my_project_list.html?uid="+uid+" ";
+				my_pj.href = "my_plus/my_project_list.html?uid="+uid+"&mobile="+mobile+" ";
+//				my_count.href = "count/count_online.html";
+				task.href = "monitoring/monitor_online.html?unitType="+escape(unitType)+"";
+				//进入统计分析页面
+//				my_count.addEventListener('tap',function(){
+//					mui.openWindow({
+//						url:'count/count_online.html',
+//						id:'count_online',
+//						show: {
+//							autoShow:false,
+//						},
+//						extras:{
+//							mobile:mobile,
+//							uid:uid,
+//							dwid:unit_d
+//						},
+//						waiting: {		
+//							autoShow: true,
+//							title:'请稍等'
+//						}
+//					});
+//				});
 				
 				//获取我的工程数目
 				mui.ajax(url+'index.php',{
@@ -83,16 +108,14 @@
 					dataType:"json",
 					timeout:10000,
 					success:function(data){
-//						alert(data)
-						if(data.status=="success"){
 							p[0].firstChild.nodeValue = data.pj_num + '个项目';
-						}
 					},
 					error:function(xhr,type,errThrown){
 						alert("ajax错误 :"+type+'----'+errThrown);
 					}
 				});
-				mui.ajax(url+'my_task/task_list.php',{
+//				获取我对应的时间戳
+				mui.ajax(url+'online/online_notise.php',{
 					data:{
 						flag:'获取工程时间戳',
 						uid:uid
@@ -102,10 +125,13 @@
 					timeout:10000,
 					success:function(data){
 						var length = data.length;
-						for(var i=0;i<length;i++){
+						sjc = data[length-1].sjc;
+						for(var i=0;i<length-1;i++){
+							sjc[i] = data[i].时间戳;
 							var pj_timestamp = data[i].时间戳;
 							taskList1(pj_timestamp);//在线检测
 						}
+						jctm(sjc);
 					},
 					error:function(xhr,type,errorThrown){
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
@@ -113,17 +139,18 @@
 				});
 				//在线检测
 				function taskList1(pj_timestamp){
-					mui.ajax(url+'my_task/task_list.php',{
+					mui.ajax(url+'online/online_notise.php',{
 						data:{
 							flag:"在线检测",
 							pj_timestamp:pj_timestamp,
-							unit:unit_d,
+							unitType:unitType,
 							unitName:unitName
 						},
 						type:'post',
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
+//							alert(data)
 							var length = data.length;
 							if(length){
 								var task = document.getElementById("task");
@@ -138,7 +165,31 @@
 						}
 					});
 				}
+				//在线检测条数
+				var jctm = function(sjc){
+					mui.ajax(url+'online/online_notise.php',{
+						data:{
+							flag:"在线检测条数",
+							unitType:unitType,
+							sjc:sjc
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+//							alert(data)
+							var p0 = document.getElementById("p0");
+							p0.innerHTML = "本周我有"+data.count+"条在线检测待处理";
+						},
+						error:function(xhr,type,errorThrown){
+//								alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
 			});
+			
+			
+			
 			
 		</script>
 	</body>
