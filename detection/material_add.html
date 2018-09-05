@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>江门气象监测系统</title>
+		<title>江门市气象局在线监测系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/my_css.css">
 		<link rel="stylesheet" href="../css/mui.min.css">
@@ -80,6 +80,10 @@
 		        <div  class="mui-input-row">
 		            <label>检测单位:</label>
 		            <select id="jcdw" style="font-size: 14px;" ></select>
+		        </div>
+		        <div  class="mui-input-row">
+		            <label>监理单位:</label>
+		            <select id="jldw" style="font-size: 14px;" ></select>
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
@@ -199,7 +203,7 @@
                 my_name = self.my_name;
                 timestamp = self.timestamp;
                 detect = self.detect;
-                supvision = self.supvision; 
+                supvision = self.supvision; //监理单位
                 jcdl = self.jclx;
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
@@ -213,6 +217,7 @@
 				var jcrq = doc.getElementById("jcrq");
 				var remark = doc.getElementById("remark");
 				var jcdw = doc.getElementById('jcdw');
+				var jldw = doc.getElementById('jldw');
 				var save_data = doc.getElementById("save_data");
 				jcr.value = my_name; //取样人默认为账号姓名
 				jclx.value = jcdl;//写入检测类型
@@ -254,35 +259,35 @@
 					sel.appendChild(option);
 				}
 				
-				//由于默认全选，点击先执行一遍显示
-				sel.addEventListener('click',function(){
-					//获取选择的检测项目
-					var sele = sel.getElementsByTagName("option");
-					var choose = "";
-					var chooseid = "";
-					for(var i=0;i<sele.length;i++){
-						if(sele[i].selected){
-							chooseid+=sele[i].value+",";
-							choose+=sele[i].innerHTML+",";
-						}
-					}
-					makeProject(choose,chooseid);
-				});
-				
-				//根据检测项目创建填写数据页面
-				sel.addEventListener('change',function(){
-					//获取选择的检测项目
-					var sele = sel.getElementsByTagName("option");
-					var choose = "";
-					var chooseid = "";
-					for(var i=0;i<sele.length;i++){
-						if(sele[i].selected){
-							chooseid+=sele[i].value+",";
-							choose+=sele[i].innerHTML+",";
-						}
-					}
-					makeProject(choose,chooseid);
-				});
+				//由于默认全选，在保存第一个页面时进行显示
+//				sel.addEventListener('click',function(){
+//					//获取选择的检测项目
+//					var sele = sel.getElementsByTagName("option");
+//					var choose = "";
+//					var chooseid = "";
+//					for(var i=0;i<sele.length;i++){
+//						if(sele[i].selected){
+//							chooseid+=sele[i].value+",";
+//							choose+=sele[i].innerHTML+",";
+//						}
+//					}
+//					makeProject(choose,chooseid);
+//				});
+//				
+//				//根据检测项目创建填写数据页面
+//				sel.addEventListener('change',function(){
+//					//获取选择的检测项目
+//					var sele = sel.getElementsByTagName("option");
+//					var choose = "";
+//					var chooseid = "";
+//					for(var i=0;i<sele.length;i++){
+//						if(sele[i].selected){
+//							chooseid+=sele[i].value+",";
+//							choose+=sele[i].innerHTML+",";
+//						}
+//					}
+//					makeProject(choose,chooseid);
+//				});
 				
 				//动态添加检测单位
 				var detection_unit = detect.split(",");
@@ -290,6 +295,13 @@
 					var option = doc.createElement("option");
 					option.innerHTML = detection_unit[i];
 					jcdw.appendChild(option);
+				}
+				//动态添加监理单位
+				var supvision_unit = supvision.split(",");
+				for(var i=0;i<supvision_unit.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = supvision_unit[i];
+					jldw.appendChild(option);
 				}
 				
 				//动态生成填写页面
@@ -324,6 +336,17 @@
 				});
 				
 				save.addEventListener('tap',function(){
+					//保存信息前动态生成数据页面
+					var sele = sel.getElementsByTagName("option");
+					var choose = "";
+					var chooseid = "";
+					for(var i=0;i<sele.length;i++){
+						if(sele[i].selected){
+							chooseid+=sele[i].value+",";
+							choose+=sele[i].innerHTML+",";
+						}
+					}
+					makeProject(choose,chooseid);
 					//信息保存
 					var gclx = document.getElementById("gclx").value;
 					var jclx = document.getElementById("jclx").value;
@@ -331,6 +354,7 @@
 					var jcrq = document.getElementById("jcrq").value;
 					var remark = document.getElementById("remark").value;
 					var jcdw = document.getElementById("jcdw").value;
+					var jldw = document.getElementById("jcdw").value;
 					mui.ajax(url+'my_plus/my_material_upload.php',{
 						data:{
 							lx:'insert',
@@ -341,6 +365,7 @@
 							jcrq:jcrq,
 							remark:remark,
 							jcdw:jcdw,
+							jldw:jldw,
 							timestamp:timestamp,
 							gcmc:gcmc
 						},

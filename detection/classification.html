@@ -114,7 +114,7 @@
 				if (e.index == 0) {
 					mui.ajax(url+'detection/online_list.php',{
 						data:{
-							flag:"进入下一个检测",
+							flag:"判断能否进入下一个检测",
 							gcmc:gcmc,
 							timestamp:timestamp
 						},
@@ -122,8 +122,13 @@
 						type:'POST', 
 						timeout:10000,
 						success:function(data){
-							mui.toast('已开启下一个检测项',{ duration:'long', type:'div' })
-							window.location.reload();
+							if(data.结果=="成功！"){
+								mui.toast('已开启下一个检测项',{ duration:'long', type:'div' })
+								window.location.reload();
+							}else{
+								alert(data.结果);
+							}
+							
 						},
 						error:function(xhr,type,errorThrown){
 //																alert('ajax错误'+type+'---'+errorThrown+"失败！");

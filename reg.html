@@ -113,8 +113,10 @@
 					var cid = plus.push.getClientInfo().clientid;
 					
 					//异步获取单位
+					units.addEventListener('change',function(){
 						mui.ajax(url+'unit.php',{
 							data:{
+								units:units.value,
 								flag:"获取单位"
 							},
 							type:"post",
@@ -122,6 +124,7 @@
 							timeout:10000,
 							success:function(data){
 //								alert(data)
+								unitName.innerHTML = "";
 								if(data.length>0){
 									for(var i=0;i<data.length;i++){
 										var option = document.createElement("option");
@@ -136,6 +139,8 @@
 								alert("ajax错误 :"+type+'----'+errThrown);
 							}
 						});
+					});
+						
 						
 					regButton.addEventListener('tap', function(event) {
 						var unitsel = unitName.getElementsByTagName("option");
@@ -188,7 +193,7 @@
 							return;
 						//单位名称为空
 						}else if(!regInfo.unitName.length){
-							alert('请输入单位名称');
+							alert('请选择单位名称');
 							return;
 						}
 						

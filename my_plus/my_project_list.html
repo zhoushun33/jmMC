@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>江门气象监测系统</title>
+		<title>江门市气象局在线监测系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/my_css.css">
@@ -83,14 +83,14 @@
 				}
 				qdTime.value = time01;
 				//动态创建函数
-				function myproject(id,timestamp,gcmc,dq,i,construction,supervision,detection,gczt){
+				function myproject(id,timestamp,gcmc,dq,i,construction,supervision,detection,dcl){
 					//进行编码
 					gcmc_c = encodeURI(encodeURI(gcmc));
 					constr = encodeURI(encodeURI(construction));
 					supvision = encodeURI(encodeURI(supervision));
 					detect = encodeURI(encodeURI(detection));
-					var zhuyi="本月已完成"+gczt+"项在线检测";
-					var chakan="查看本工程检测";
+					var zhuyi="未完成在线检测"+dcl+"项";
+					var chakan="签到后才可以进行操作";
 					
 					var diqu="地区："+	dq;
 					var an1='点击查看';
@@ -188,7 +188,30 @@
 						div4.appendChild(p4);
 						var txt6=document.createTextNode(chakan);
 						p4.appendChild(txt6);
-				
+						
+						//查看未完成检测
+						button.addEventListener('tap',function(){
+							mui.openWindow({
+								url:'../detection/qualifuied.html',
+								styles: {
+									hardwareAccelerated:false
+								},
+								extras:{
+									//传递参数
+									monile:mobile,
+									timestamp:timestamp,
+									gcmc:gcmc
+								},
+								show:{
+									autoShow:true,//页面loaded事件发生后自动显示
+									aniShow:'slide-in-right',//页面显示动画
+									duration:'100'//页面动画持续时间
+								},
+								waiting:{
+									autoShow:false,//自动显示等待框
+								}
+							});
+						});
 						//点击签到
 						button2.addEventListener('tap',function(){
 							var id = this.id;
@@ -221,8 +244,8 @@
 								var construction = data[i].施工单位;
 								var supervision = data[i].监理单位;
 								var detection = data[i].检测单位;
-								var gczt = data[i].工程状态;
-								myproject(id,timestamp,gcmc,dq,i,construction,supervision,detection,gczt);
+								var dcl = data[i].待处理;
+								myproject(id,timestamp,gcmc,dq,i,construction,supervision,detection,dcl);
 								
 							}
 						}else{

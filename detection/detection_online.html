@@ -217,6 +217,7 @@
 			mui('.mui-scroll-wrapper').scroll({
 				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 			});
+			var yhdw = "";//创建全局变量，用户单位
 			mui.plusReady(function(){
 				mui.init({
 					gestureConfig:{					
@@ -628,7 +629,8 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if((data['单位类型']=='监理单位')||data['单位类型']=='管理'){
+							yhdw = data['单位名称'];//将获取的值传入全局变量
+							if((data['单位类型']=='监理单位'&&data['单位名称']==data['监理单位'])||data['单位类型']=='管理'){
 								if(qd=="已签到"){
 									mui.ajax(url+'detection/online_list.php',{
 										data:{
@@ -745,7 +747,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if((data['单位类型']== '检测单位')||data['单位类型']=='管理'){
+							if((data['单位类型']== '检测单位'&&data["单位名称"]==data["检测单位"])||data['单位类型']=="管理"){
 								if(qd=="已签到"){
 									mui.ajax(url+'detection/online_list.php',{
 										data:{
@@ -945,7 +947,8 @@
 							my_name:my_name,
 							constr:constr,//施工单位
 							supvision:supvision,//监理单位
-							detect:detect//检测单位
+							detect:detect,//检测单位
+							yhdw:yhdw
 						},
 						show:{
 							autoShow:true,//页面loaded事件发生后自动显示
@@ -1033,7 +1036,7 @@
 					type:'POST', 
 					timeout:10000,
 					success:function(data){
-//						alert(data.结果);
+						alert(data.结果);
 						if(data.条数==0){
 							var btnArray = ['是', '否'];
 							mui.confirm('确定将该检测类型闭合？', '江门市气象局在线监测系统', btnArray, function(e) {
@@ -1061,7 +1064,9 @@
 //																alert('ajax错误'+type+'---'+errorThrown+"失败！");
 										}
 									});	
-								}	
+								}else{
+									plus.webview.close('detection_online');
+								}
 							});
 						}else{
 							mui.toast('操作成功',{ duration:'long', type:'div' }) 

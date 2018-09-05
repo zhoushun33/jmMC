@@ -78,7 +78,7 @@
 				var p = document.getElementsByTagName("p");
 				my_pj.href = "my_plus/my_project_list.html?uid="+uid+"&mobile="+mobile+" ";
 //				my_count.href = "count/count_online.html";
-				task.href = "monitoring/monitor_online.html?unitType="+escape(unitType)+"";
+//				task.href = "monitoring/monitor_online.html?unitType="+escape(unitType)+"";
 				//进入统计分析页面
 //				my_count.addEventListener('tap',function(){
 //					mui.openWindow({
@@ -151,14 +151,14 @@
 						timeout:10000,
 						success:function(data){
 //							alert(data)
-							var length = data.length;
-							if(length){
-								var task = document.getElementById("task");
-								var span = document.createElement("span");
-								span.innerHTML = "待处理";
-								span.className='mui-badge mui-badge-danger';
-								task.appendChild(span);
-							}
+//							var length = data.length;
+//							if(length){
+//								var task = document.getElementById("task");
+//								var span = document.createElement("span");
+//								span.innerHTML = "待处理";
+//								span.className='mui-badge mui-badge-danger';
+//								task.appendChild(span);
+//							}
 						},
 						error:function(xhr,type,errorThrown){
 //							alert('ajax错误'+type+'---'+errorThrown+"失败！");
@@ -178,8 +178,8 @@
 						timeout:10000,
 						success:function(data){
 //							alert(data)
-							var p0 = document.getElementById("p0");
-							p0.innerHTML = "本周我有"+data.count+"条在线检测待处理";
+//							var p0 = document.getElementById("p0");
+//							p0.innerHTML = "本周我有"+data.count+"条在线检测待处理";
 						},
 						error:function(xhr,type,errorThrown){
 //								alert('ajax错误'+type+'---'+errorThrown+"失败！");

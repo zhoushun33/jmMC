@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门市气象局在线监测系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">工程信息</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		    	<div class="mui-input-row">
+		            <label>工程名称:</label>
+		            <input id="gcmc" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>防雷类别:</label>
+		            <input id="fllb" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>区域:</label>
+		            <input id="qy" type="text" class="mui-input-clear"  readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>地址:</label>
+		            <input id="dz" type="text" class="mui-input-clear"   readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>栋数:</label>
+		            <input id="ds" type="text" class="mui-input-clear" readonly="readonly" disabled="disabled" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>地上/下层数（层）:</label>
+		            <input id="cs" type="text" class="mui-input-clear"  readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+					<label> 高度（m）：</label>
+					<input  id='hight' type="text" readonly="readonly">						
+				</div>	
+				<div class="mui-input-row">
+					<label> 建筑面积（㎡）：</label>
+					<input  id='jzmj' type="text" readonly="readonly">						
+				</div>	
+				<div class="mui-input-row">
+					<label> 基坑深度（m）：</label>
+					<input  id='jksd' type="text" readonly="readonly">						
+				</div>
+				<div class="mui-input-row">
+					<label> 开工日期：</label>
+					<input  id='kgrq' type="text" readonly="readonly">						
+				</div>
+		  </form><br />
+		    <div style="text-align: center;">
+		    	<button type="button" class="mui-btn mui-btn-primary" id="but1">查看/修改附件</button>
+		    </div>
+		    
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var timestamp = self.timestamp;
+				//获取工程信息
+				mui.ajax(url+'my_plus/my_project_atta.php',{
+					data:{
+						flag:"工程信息",
+						timestamp:timestamp
+					},
+					type:'post',
+					dataType:'json',
+					timeout:10000,
+					success:function(data){
+						gcmc.value = data.工程名称;
+						fllb.value = data.防雷类别;
+						qy.value = data.区域;
+						dz.value = data.地址;
+						ds.value = data.栋数;
+						cs.value = data.层数;
+						hight.value = data.高度;
+						jzmj.value = data.建筑面积;
+						jksd.value = data.基坑深度;
+						kgrq.value = data.开工日期;
+					},
+					error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				//打开附件查看页面
+				var but = document.getElementById("but1");
+				but.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'my_project_atta.html',
+						id: 'my_project_atta',
+						styles: {
+							hardwareAccelerated:false
+						},
+						extras:{
+							flag:"附件查看",
+							timestamp:timestamp
+						},
+						show: {
+							aniShow:"pop-in"
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

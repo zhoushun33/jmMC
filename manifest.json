@@ -5,9 +5,9 @@
 		"iPad"
 	],
 	"id": "H56E096EF",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "江门气象监测",/*应用名称，程序桌面图标名称*/
+	"name": "江门市气象局在线监测系统",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "2018.8.27.1.0",/*应用版本名称*/
+		"name": "2018.01.0906",/*应用版本名称*/
 		"code": ""
 	},
 	"description": "",/*应用描述信息*/
@@ -272,7 +272,8 @@
 					"my_plus/checkSign.html",
 					"my_plus/my_plus_wdgc_djck.html",
 					"attention_plus/attention_ewm.html",
-					"my_plus/my_project_list_1.html"
+					"my_plus/my_project_list_1.html",
+					"detection/qualifuied.html"
 				],
 				"priority": 0
 			},
@@ -342,7 +343,8 @@
 					"detection/classification.html",
 					"detection/qualifuied.html",
 					"my_plus/my_project_atta.html",
-					"my_plus/my_project.html"
+					"my_plus/my_project.html",
+					"my_plus/my_project_information.html"
 				],
 				"priority": 0
 			},
@@ -1007,7 +1009,8 @@
 				"resources": [],
 				"refer": [
 					"detection/qualifuied_change.html",
-					"detection/detection_samDet.html"
+					"detection/detection_samDet.html",
+					"detection/choose_fg.html"
 				],
 				"priority": 0
 			},
@@ -1052,6 +1055,28 @@
 				"refer": [
 					"monitoring/monitor_online.html",
 					"detection/readimage.html"
+				],
+				"priority": 0
+			},
+			"detection/choose_fg.html": {
+				"resources": [],
+				"refer": [
+					"detection/choose_fg.html",
+					"detection/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_plus/my_project_information.html": {
+				"resources": [],
+				"refer": [
+					"my_plus/my_project_atta.html"
+				],
+				"priority": 0
+			},
+			"detection/online_change.html": {
+				"resources": [],
+				"refer": [
+					"detection/camera_image.html"
 				],
 				"priority": 0
 			}

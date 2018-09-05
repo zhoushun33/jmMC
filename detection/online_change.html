@@ -91,9 +91,10 @@
                 gcmc_c = self.gcmc_c;
                 my_name = self.my_name;
                 timestamp = self.timestamp;
-                constr = self.constr;
-	      		supvision = self.supvision;
-	      		detect = self.detect;
+                constr = self.constr;//施工单位
+	      		supvision = self.supvision;//监理单位
+	      		detect = self.detect;//检测单位
+	      		yhdw = self.yhdw;//用户单位
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
                 ulid = self.ulid;
@@ -107,7 +108,7 @@
 				var operation_unit = doc.getElementById("operation_unit"); 
 				var sjc = doc.getElementById("sjc");
 				wipe.value = my_name;
-				wiun.value = supvision;
+				wiun.value = yhdw;
 				//动态添加检测操作单位
 //				var opera = detect.split(",");
 //				for(var i=0;i<opera.length;i++){

@@ -14,7 +14,7 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
 		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->
-		    <h1 class="mui-title">委托检测-监理处理</h1>
+		    <h1 class="mui-title">委托检测-返工</h1>
 		</header>
 		<div class="mui-content">
 		    <form class="mui-input-group" id="myform2">
@@ -23,12 +23,12 @@
 		            <input id="date" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" value="2017-07-09">
 		        </div>-->
 		        <div class="mui-input-row">
-		            <label>处理记录:</label>
-		            <input type="text" class="mui-input-clear" placeholder="请输入处理记录" id="test_txt">
+		            <label>返工记录:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入返工记录" id="test_txt">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>处理类型:</label>
-		            <input type="text" class="mui-input-clear" placeholder="" id="type" readonly="readonly">
+		            <input type="text" class="mui-input-clear" placeholder="" value="返工" id="type" readonly="readonly">
 		        </div>
 		    </form>
 			
@@ -50,8 +50,8 @@
 						<li id="empty_cj" class="ditem-empty">无历史记录</li>
 					</ul>
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('wtjc');">清空记录</button>
-					<button id="wtjc" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">保存及上传</button>
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('fg');">清空记录</button>
+					<button id="fg" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">保存及上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -64,7 +64,7 @@
 		<script src="../js/mui.poppicker.js"></script>
 		<script src="../js/native.js"></script>
 		<script src="../js/service.js"></script>
-		<script src="../js/upload_enreschge.js"></script>
+		<script src="../js/upload_fg.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
@@ -84,11 +84,11 @@
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
                 ulid = self.ulId;
-                type = self.type; //处理类型
+//              type = self.type; //处理类型
 				var doc = document;
 				var sjc = doc.getElementById("sjc");
 				var progcmc = doc.getElementById('gcmc');
-				doc.getElementById("type").value = type;
+//				doc.getElementById("type").value = type;
 				progcmc.value = gcmc;
 				var protimesp = doc.getElementById('ulid');
 				protimesp.value = ulid;
